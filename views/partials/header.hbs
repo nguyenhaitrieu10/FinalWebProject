@@ -1,0 +1,82 @@
+<!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="/">Navbar</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent" >
+    <ul class="navbar-nav" style="float: right;">
+      <li class="nav-item active">
+        <a class="nav-link" href="/shopping-cart">Shopping cart <span class="sr-only">(current)</span></a>
+        <span class="badge">{{session.cart.totalQty}}</span>
+      </li>
+      {{#if login}}
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-user"></i>User Management
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="/user/profile">User</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="/user/logout">Logout</a>
+        </div>
+      </li>
+      {{else}}
+      
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-user"></i>User Management
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="/user/signin">Sign in</a>
+          <a class="dropdown-item" href="/user/signup">Sign up</a>
+        </div>
+      </li>
+      {{/if}}
+    </ul>
+  </div>
+</nav>
+ -->
+
+
+<header id="ht-navbar">
+  <nav class="ht-navbar navbar navbar-expand-lg container">
+    <a class="navbar-brand" href="/"><img id="ht-logo" src="/img/logo.png" alt=""></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"><i class="fas fa-bars"></i></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item hvr-underline-reveal">
+          <a class="nav-link " href="/design"><i class="fas fa-paint-brush"></i>Tự thiết kế</a>
+        </li>
+        <li class="nav-item hvr-underline-reveal">
+          <a class="nav-link" href="/shopping"><i class="fas fa-shopping-cart"></i>Mua sắm</a>
+        </li>
+        <li class="nav-item ht-shopping-basket hvr-underline-reveal">
+            <a class="nav-link" href="/cart">
+                <i class="fas fa-shopping-basket"></i>Giỏ hàng
+                <span class="badge badge-light">1</span>
+            </a>
+          </li>
+        <li class="nav-item hvr-underline-reveal"  style="margin-left: 10px;">
+          <a class="nav-link header-login" href="#" data-toggle="modal" data-target="#exampleModalCenter">Đăng nhập</a>
+        </li>
+        <li class="nav-item ht-signup hvr-grow">
+          <a class="nav-link ht-register header-register" href="#" data-toggle="modal" data-target="#exampleModalCenter">Đăng ký</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+
+<script type="text/javascript">
+  $('.ht-login').click(function(){
+    let url = window.location.href;
+    let page = url.split('/');
+    page = page[page.length - 1];
+    page = './member-' + page.split('html')[0] + 'html';
+    window.location.replace(page);
+  });
+</script>

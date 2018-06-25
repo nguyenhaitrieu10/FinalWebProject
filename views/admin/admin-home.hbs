@@ -1,0 +1,194 @@
+	<!--<ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="">Home</a><i class="fa fa-angle-right"></i>Tabels</li>
+        </ol> -->
+<div class="four-grids row">
+	<div class="col-md-3 four-grid hvr-float-shadow">
+		<div class="four-agileits">
+			<div class="icon">
+				<i class="fas fa-users"></i>
+			</div>
+			<div class="four-text">
+				<a href="./admin-user"><h3>Người dùng</h3></a>
+				<h4> 220  </h4>
+				
+			</div>
+			
+		</div>
+	</div>
+	<div class="col-md-3 four-grid hvr-float-shadow">
+		<div class="four-agileinfo">
+			<div class="icon">
+				<i class="fas fa-th-list"></i>
+			</div>
+			<div class="four-text">
+				<a href="./admin-order"><h3>Đơn hàng</h3></a>
+				<h4>320</h4>
+
+			</div>
+		</div>
+	</div>
+	<div class="col-md-3 four-grid hvr-float-shadow">
+		<div class="four-w3ls">
+			<div class="icon">
+				<i class="fas fa-dolly-flatbed"></i>
+			</div>
+			<div class="four-text">
+				<a href="./admin-store"><h3>Sản phẩm</h3></a>
+				<h4>1,430</h4>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-3 four-grid hvr-float-shadow">
+		<div class="four-wthree" >
+			<div class="icon">
+				<i class="fas fa-history"></i>
+			</div>
+			<div class="four-text">
+				<a href="./home"><h3>Lượt view ngày</h3></a>
+				<h4>430</h4>
+			</div>						
+		</div>
+	</div>
+	<div class="clearfix"></div>
+</div>
+
+<!--agileinfo-grap-->
+<div class="agileinfo-grap">
+	<div class="agileits-box">
+		<header class="agileits-box-header clearfix">
+		<h3>Thống kê</h3>
+			<div class="toolbar">
+				<div class="pull-left">
+					<div class="btn-group">
+						<a href="#" class="btn btn-default btn-xs">Hàng ngày</a>
+						<a href="#" class="btn btn-default btn-xs active">Hàng tháng</a>
+						<a href="#" class="btn btn-default btn-xs">Hàng năm</a>
+					</div>
+				</div>
+<!-- 				<div class="pull-right">
+					<div class="btn-group">
+					  <a aria-expanded="false" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+						Export <i class="fa fa-angle-down"></i>
+					  </a>
+					  <ul class="dropdown-menu pull-right" role="menu">
+						<li><a href="#">Export as PDF</a></li>
+						<li><a href="#">Export as CSV</a></li>
+						<li><a href="#">Export as PNG</a></li>
+						<li class="divider"></li>
+						<li><a href="#">Separated link</a></li>
+					  </ul>
+					</div>
+					<a href="#" class="btn btn-primary btn-xs"><i class="fa fa-cog"></i></a>
+				</div> -->
+			</div>
+		</header>
+<!-- 			<div class="col-md-12 chart-blo-1">
+	    	    <div class="line-chart">
+	    		 <canvas id="line" height="300" width="400" style="width: 400px; height: 300px;"> </canvas>
+	                    <script>
+	                        var lineChartData = {
+							labels : ["","","","","","",""],
+							datasets : [
+								{
+									fillColor : "rgba(252, 130, 19, 0.74)",
+									strokeColor : "#FC8213",
+									pointColor : "#FC8213",
+									pointStrokeColor : "#fff",
+									data : [65,59,90,81,56,55,40]
+								},
+								{
+									fillColor : "rgba(51, 122, 183, 0.71)",
+									strokeColor : "#337AB7",
+									pointColor : "#337AB7",
+									pointStrokeColor : "#fff",
+									data : [28,48,40,19,96,27,100]
+								}
+							]
+							
+						};
+	                       new Chart(document.getElementById("line").getContext("2d")).Line(lineChartData);
+
+	                    </script>
+	    	    </div>
+	    	</div> -->
+		<div class="col-md-12 chart-laýer-left"> 
+			<div class="glocy-chart">
+				<div class="span-2c">  
+                    <h3 class="tlt"></h3>
+                    <canvas id="bar" height="300" width="440" style="width: 440px; height: 300px;"></canvas>
+                    <script>
+                        var barChartData = {
+                        labels : ["Jan","Feb","Mar","Apr","May","Jun","jul"],
+                        datasets : [
+                            {
+                                fillColor : "#FC8213",
+                                data : [65,59,90,81,56,55,40]
+                            },
+                            {
+                                fillColor : "#337AB7",
+                                data : [28,48,40,19,96,27,100]
+                            }
+                        ]
+
+                    };
+                        new Chart(document.getElementById("bar").getContext("2d")).Bar(barChartData);
+                    </script>
+                </div> 			  		   			
+			</div>
+			<div style="width: 20px; height: 20px; background-color: #FC8213; display: inline-block; margin-left: 10px;"></div>
+			<span>Lượng truy cập</span>
+			<div style="width: 20px; height: 20px; background-color: #337AB7; display: inline-block; margin-left: 10px;"></div>
+			<span>Đơn hàng</span>
+		</div>
+	</div>
+</div>
+<div class="agile-grids">	
+	<!-- tables -->				
+	<div class="agile-tables">
+		<div class="w3l-table-info">
+		  <h2>
+		  	Giao dịch gần nhất trong tháng 
+		  	<span style="color: #ff4a43; float: right; font-size: 30px;">2.300.000VND</span>
+		  </h2>
+		    <table id="table">
+			<thead>
+			  <tr>
+				<th>Khách hàng</th>
+				<th>Giới tính</th>
+			`	<th>Đơn hàng</th>
+				<th>Thời gian</th>
+				<th>Tổng tiền (VND)</th>
+			  </tr>
+			</thead>
+			<tbody>
+			  <tr>
+				<td>Huỳnh Anh</td>
+				<td>Nữ</td>
+				<td>F03445</td>
+				<td>14:00 22/05/2018</td>
+				<td>350.000</td>
+			  </tr>
+			</tbody>
+			<tbody>
+			  <tr>
+				<td>Huỳnh Anh</td>
+				<td>Nữ</td>
+				<td>B23411</td>
+				<td>8:30 18/05/2018</td>
+				<td>99.000</td>
+			  </tr>
+			</tbody>
+			<tbody>
+			  <tr>
+				<td>Thiên Bảo</td>
+				<td>Nam</td>
+				<td>C001F8</td>
+				<td>20:55 22/05/2018</td>
+				<td>150.000</td>
+			  </tr>
+			</tbody>
+		  </table>
+		</div>
+	</div>
+	<!-- //tables -->
+</div>

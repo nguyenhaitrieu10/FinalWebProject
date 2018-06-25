@@ -1,0 +1,37 @@
+<section class="container" style="padding-top: 62px;">
+	<div class="row" style="margin-top: 30px; background-color: #fff;">
+		<div class="ht-img-lg col-lg-6 col-sm-12 hvr-grow">
+			<img src="{{this.imagePath}}" alt="" style="width:75%; height:50%;">
+		</div>
+		<div class="ht-info-detail col-lg-6 col-sm-12">
+			<h3>{{this.title}}</h3>
+			<!-- <h6 style="color:gray; margin-left: 10px">Mã sản phẩm: <span style="color:blue">SP00{{this.code}}</span></h6> -->
+			<h6 style="color:gray; margin-left: 10px">Nhà sản xuất: <span style="color:blue">{{this.origin}}</span></h6>
+			{{#if this.number}}
+			<h6 style="color:gray; margin-left: 10px">Tình trạng: <span style="color:blue">còn hàng</span>
+			</h6>
+			{{else}}
+			<h6 style="color:gray; margin-left: 10px">Tình trạng: <span style="color:blue">hết hàng</span>
+			</h6>
+			{{/if}}
+			<div>
+				<h3 class="ht-info-cost">
+					<span class="ht-real-cost" style="color:#ff6600">{{dataValues.cost}}đ</span> <strike style="color:lightgray; font-size:0.67em">{{beforCost}}đ</strike><span class="ht-saleoff" style="font-size:0.67em">-{{dataValues.sellof}}%</span>
+					<br/>
+				</h3>
+			</div>
+			<h5 style="margin-top: 20px;  font-size:1em">Chọn kích cỡ: </h5>
+			<div style=" margin-left: 10px">
+				{{#each dataValues.size}}
+				<button style="background-color:transparent;color:#189eff;border: 2px solid #189eff;border-radius: 5px;" value="{{this}}">Size {{this}}</button>
+				{{/each}}
+			</div>
+			<h5><br/>Số lượng: <input type="number" name="quantity" style="width: 60px; height:30px; padding-left: 10px; margin-left: 20px" value="1"></h5>
+			<button class="btn btn-primary ht-add-cart"><i class="fas fa-shopping-cart"></i>Thêm vào giỏ hàng</button>
+		</div>
+	</div>
+	<div class="row ht-more-info" style="background-color: #fff; margin-top: 16px;">
+		<h5 style="width: 100%;">Mô tả:</h5>
+		<p>{{dataValues.description}}</p>
+	</div>
+</section>

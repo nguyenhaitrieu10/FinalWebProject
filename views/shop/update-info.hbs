@@ -1,0 +1,69 @@
+<section style="margin-top: 0">
+        <div id="form-update" class="container" style="padding-top: 100px; min-height: 90%;  width: 100%">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h3>Thông tin cá nhân</h3>
+                            <form class="mm-agree">
+                                <div class="form-group">
+                                    <label for="text">Họ tên:</label>
+                                    <input type="text" class="form-control" id="update-name" value="Nguyễn Hải Triều" onchange="checkName()">
+                                    <label class="hl-error hl-hidden" id="hl-error-name">Họ tên không thể để trống</label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="cmnd">Chứng minh nhân dân:</label>
+                                    <input type="text" class="form-control" id="update-cmnd" value="123456789" onchange="checkCMND()">
+                                    <label class="hl-error hl-hidden" id="hl-error-cmnd1">Chứng minh nhân dân không thể để trống</label>
+                                    <label class="hl-error hl-hidden" id="hl-error-cmnd2">Chứng minh nhân dân không hợp lệ</label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="tel">Số điện thoại:</label>
+                                    <input type="tel" class="form-control" id="update-phone" value="01234567890" onchange="changexx()">
+                                    <label class="hl-error hl-hidden" id="hl-error-phone">Số điện thoại không hợp lệ</label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="text">Địa chỉ:</label>
+                                    <input type="text" class="form-control" id="update-address" value="227 Nguyễn Văn Cừ"  onchange="changexx()">
+                                </div>
+                                <div class="form-group">
+                                    <label for="text">Ngày sinh:</label>
+                                    <input type="date" class="form-control" id="update-birth" value="1997-01-02"  onchange="changexx()">
+                                </div>
+                                <div class="form-group" onchange="changexx()">
+                                    <label for="text">Giới tính:</label><br>
+                                    <input type="radio" name="gender" value="male" checked="checked"> Male<br>
+                                    <input type="radio" name="gender" value="female"> Female<br>
+                                    <br>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-default" id="hl-submit-update" onclick="subUpdate()" >Thay đổi</button>
+                                </div>
+                        </div>
+                        <div class="col-md-6" >
+                            <h3>Thay đổi mật khẩu</h3>
+                            <form class="mm-agree">
+                                <div class="form-group">
+                                    <label for="password">Mật khẩu cũ:</label>
+                                    <input type="password" class="form-control" id="old-password" onchange="checkOldPass()">
+                                    <label class="hl-error hl-hidden" id="hl-error-password-old">Mật khẩu không chính xác</label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">Mật khẩu mới:</label>
+                                    <input type="password" class="form-control" id="new-password1"  onchange="checkNewPass1()">
+                                    <label class="hl-error hl-hidden" id="hl-error-password-new1">Mật khẩu phải từ 8 ký tự trở lên</label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">Nhập lại mật khẩu mới:</label>
+                                    <input type="password" class="form-control" id="new-password2"  onchange="checkNewPass2()">
+                                    <label class="hl-error hl-hidden" id="hl-error-password-new2">Mật khẩu mới không trùng với nhau</label>
+                                </div>
+                                <div class="form-group">
+                                        <button type="submit" class="btn btn-default"  id="hl-sub-Pass-Update" onclick="changPass()">Thay đổi mật khẩu</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+</section>
+<link rel="stylesheet" type="text/css" href="/css/hl-style.css">

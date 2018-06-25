@@ -1,0 +1,20 @@
+<div class="card col-lg-3 col-md-6  col-sm-12 ht-card">
+    <div class="hovereffect">
+        <img class="card-img-top ht-card-img img-responsive" src="{{this.imagePath}}" alt="Card image cap">
+        <div class="overlay">
+           <h2>Free Style</h2>
+           <a class="info" href="/product/SP00{{this._id}}">Xem chi tiết</a>
+        </div>
+    </div>
+	<a href="./product">
+	  <div class="card-body">
+	    <p class="card-text-shopping">{{this.title}}</p>
+		{{#if saleoff}}
+	    	<p class="ht-info-cost"><strike>{{beforCost}} usd</strike><span class="ht-saleoff">-{{this.saleoff}}%</span></p>
+	    {{else}}
+	    	<p class="ht-info-cost"><strike></strike><span class="ht-saleoff"></span></p>
+		{{/if}}
+	    <p><span class="ht-cost">{{this.price}} usd</span></p>
+	  </div>
+	</a>
+</div>
