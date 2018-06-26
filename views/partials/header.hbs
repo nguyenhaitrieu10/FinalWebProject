@@ -48,35 +48,40 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item hvr-underline-reveal">
-          <a class="nav-link " href="/design"><i class="fas fa-paint-brush"></i>Tự thiết kế</a>
+          <a class="nav-link {{#if isDesign}}ht-current{{/if}}" href="/design"><i class="fas fa-paint-brush"></i>Tự thiết kế</a>
         </li>
         <li class="nav-item hvr-underline-reveal">
-          <a class="nav-link" href="/shopping"><i class="fas fa-shopping-cart"></i>Mua sắm</a>
+          <a class="nav-link {{#if isShopping}}ht-current{{/if}}" href="/shopping"><i class="fas fa-shopping-cart"></i>Mua sắm</a>
         </li>
         <li class="nav-item ht-shopping-basket hvr-underline-reveal">
-            <a class="nav-link" href="/cart">
-                <i class="fas fa-shopping-basket"></i>Giỏ hàng
-                <span class="badge badge-light">1</span>
-            </a>
-          </li>
+          <a class="nav-link {{#if isCart}}ht-current{{/if}}" href="/shopping-cart">
+              <i class="fas fa-shopping-basket"></i>Giỏ hàng
+              <span class="badge badge-light">{{session.cart.totalQty}}</span>
+          </a>
+        </li>
+        {{#if login}}
+        <li class="nav-item dropdown ht-avatar " style="margin-left: 10px;">
+          <a class="nav-link dropdown-toggle" style="color: #007bff;" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-user"></i>{{username}}
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/user/orders">Đơn Hàng</a>
+            <!-- <a class="dropdown-item" href="#">Sản phẩm yêu thích</a> -->
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="/user/profile">Tài khoản</a>
+            <a class="dropdown-item" href="/user/logout">Thoát</a>
+          </div>
+        </li>
+        {{else}}
         <li class="nav-item hvr-underline-reveal"  style="margin-left: 10px;">
-          <a class="nav-link header-login" href="#" data-toggle="modal" data-target="#exampleModalCenter">Đăng nhập</a>
+          <a class="nav-link header-login" href="/user/signin">Đăng nhập</a>
         </li>
         <li class="nav-item ht-signup hvr-grow">
-          <a class="nav-link ht-register header-register" href="#" data-toggle="modal" data-target="#exampleModalCenter">Đăng ký</a>
+          <a class="nav-link ht-register header-register" href="/user/signup" >Đăng ký</a>
         </li>
+        {{/if}}
       </ul>
     </div>
   </nav>
 </header>
-
-
-<script type="text/javascript">
-  $('.ht-login').click(function(){
-    let url = window.location.href;
-    let page = url.split('/');
-    page = page[page.length - 1];
-    page = './member-' + page.split('html')[0] + 'html';
-    window.location.replace(page);
-  });
-</script>

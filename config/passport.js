@@ -19,7 +19,12 @@ passport.use('local.signup', new localStrategy({
 	passReqToCallback: true
 }, function(req, email, password, done){
 	req.checkBody('email','Invalid email').notEmpty().isEmail();
-	req.checkBody('password','Invalid password').notEmpty().isLength({min: 5});
+	req.checkBody('password','Invalid password').notEmpty().isLength({min: 6});
+	req.checkBody('name','Invalid name').notEmpty();
+	req.checkBody('address','Invalid adress').notEmpty();
+	req.checkBody('phone','Invalid phone').notEmpty().isLength({min: 8});
+	req.checkBody('birth','Invalid birth').notEmpty();
+
 	var errors = req.validationErrors();
 	if (errors) {
 		var messages = [];
@@ -42,6 +47,11 @@ passport.use('local.signup', new localStrategy({
 				return done(err);
 			return done(err,newUser);
 		});
+
+		newUser.name = req.body.name;
+		newUser.address = req.body.address;
+		newUser.phone = req.body.phone;
+		newUser.birth = req.body.birth;
 	});
 }));
 
@@ -53,7 +63,7 @@ passport.use('local.signin', new localStrategy({
 	passReqToCallback: true
 }, function(req, email, password, done){
 	req.checkBody('email','Invalid email').notEmpty().isEmail();
-	req.checkBody('password','Invalid password').notEmpty().isLength({min: 5});
+	req.checkBody('password','Invalid password').notEmpty().isLength({min: 6});
 	var errors = req.validationErrors();
 	if (errors) {
 		var messages = [];

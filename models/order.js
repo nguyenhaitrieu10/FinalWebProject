@@ -10,6 +10,7 @@ var schema = new Schema({
 	status: {type: String, require: true},
 	cvv: {type: String, require: true},
 	cardCode: {type: String, require: true},
+	update: {type: Date, default: new Date()}
 });
 
 module.exports = mongoose.model('Order',schema);

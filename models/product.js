@@ -6,13 +6,16 @@ var schema = new Schema({
 	imagePath: {type: String, require: true},
 	description: {type: String, require: true},
 	price: {type: Number, require: true},
-	type: {type: String, require: true}, //poo or tee
+	type: {type: String, require: true}, //polo or tee
 	origin: {type: String, require: true},
 	saleoff: {type: Number, require: true},
 	color: {type: String, require: true},
 	number: {type: Number, require: true},
+	update: {type: Date, default: new Date()},
 	madeBy: {type: Schema.Types.ObjectId, ref: 'User', require: false},
 });
+
+schema.index({ title: 'text', description: 'text'});
 
 module.exports = mongoose.model('Product',schema);
 

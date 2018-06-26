@@ -666,3 +666,30 @@ transition-delay:.2s;
 td{
 	text-align: center;
 }
+
+.ht-size{
+	background-color: transparent;
+    color: #189eff;
+    border: 2px solid #189eff;
+    border-radius: 5px;
+}
+
+.ht-size.active{
+	background-color: #189eff;
+    color: #fff;
+    border: 2px solid #189eff;
+    border-radius: 5px;
+}
+
+.hovereffect a.info.add-to-cart{
+	margin-top: 15px;
+    width: 80%;
+    font-size: 0.8em;
+}
+
+#card-element{
+	padding: 12px;
+    border: solid 1px #626262;
+    border-radius: 10px;
+    margin: 0 0 20px;
+}

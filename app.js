@@ -39,23 +39,21 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 	
+// view engine setup
+app.engine('hbs',expressHsb({
+  defaultLayout: 'layout',
+  extname: 'hbs'
+}));
+
+app.set('view engine', 'hbs');
 
 app.use(function(req, res, next){
   res.locals.login = req.isAuthenticated();
   res.locals.session = req.session;
+  let user = req.user?(req.user.name.split(' ')):"";
+  res.locals.username =  user?user[user.length-1]:"";
   next();
 });
-
-// view engine setup
-app.engine('hbs',expressHsb({
-  defaultLayout: 'layout',
-  extname: 'hbs',
-  helpers: {
-    paginate: paginateHelper.createPagination
-  }
-}));
-
-app.set('view engine', 'hbs');
 
 app.use('/user',userRouter); // set Router for user family
 app.use('/', indexRouter); // set Router for index family
@@ -73,9 +71,8 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render('other/error');
 });
-
 
 
 

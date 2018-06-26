@@ -1,35 +1,35 @@
 <div class="container-fluid" style="padding: 0 60px; padding-top: 85px;background-color: #f9f9f9; padding-bottom: 30px;">
 	<div class="row" style="background-color: #fff;">
 		<aside id="ht-filter" class="col-sm-3" >
-			<section id="ht-type-tshirt">
+			<form id="ht-type-tshirt">
 				<h6 class="ht-title-check">Loại áo</h6>
 				<div class="checkbox">
-				  <label class="ht-checkbox"><input name="type-tshirt" type="radio" value="polo">Áo cổ trụ</label>
+				  <label class="ht-type ht-checkbox"><input name="type-tshirt" type="radio" value="polo">Áo cổ trụ</label>
 				</div>
 				<div class="checkbox">
-				  <label class="ht-checkbox"><input name="type-tshirt" type="radio" value="tee">Áo cổ tròn</label>
+				  <label class="ht-type ht-checkbox"><input name="type-tshirt" type="radio" value="tee">Áo cổ tròn</label>
 				</div>
-			</section>
-			<section id="ht-color-tshirt">
+			</form>
+			<form id="ht-color-tshirt">
 				<h6 class="ht-title-check">Nhóm màu</h6>
 				<div class="checkbox">
-				  <label class="ht-checkbox"><input name="color-tshirt" type="checkbox" value="white">Trắng</label>
+				  <label class="ht-color ht-checkbox"><input name="color-tshirt" type="radio" value="white">Trắng</label>
 				</div>
 				<div class="checkbox">
-				  <label class="ht-checkbox"><input name="color-tshirt" type="checkbox" value="grey">Xám</label>
+				  <label class="ht-color ht-checkbox"><input name="color-tshirt" type="radio" value="grey">Xám</label>
 				</div>
 				<div class="checkbox">
-				  <label class="ht-checkbox"><input name="color-tshirt" type="checkbox" value="black">Đen</label>
+				  <label class="ht-color ht-checkbox"><input name="color-tshirt" type="radio" value="black">Đen</label>
 				</div>
 				<div class="checkbox">
-				  <label class="ht-checkbox"><input name="color-tshirt" type="checkbox" value="red">Đỏ</label>
+				  <label class="ht-color ht-checkbox"><input name="color-tshirt" type="radio" value="red">Đỏ</label>
 				</div>
 				<div class="checkbox">
-				  <label class="ht-checkbox"><input name="color-tshirt" type="checkbox" value="blue">Xanh</label>
+				  <label class="ht-color ht-checkbox"><input name="color-tshirt" type="radio" value="blue">Xanh</label>
 				</div>
-			</section>
+			</form>
 
-			<h3 style="color: #0033ff; text-shadow: 2px 4px #e1e1e1; text-align: center; background-color: #fff; margin-bottom: 0; padding-bottom: .5rem;margin-top: 20px;">
+			<h3 style="color: #0033ff; text-shadow: 2px 4px #e1e1é; text-align: center; background-color: #fff; margin-bottom: 0; padding-bottom: .5rem;margin-top: 20px;">
 				Tư vấn - <span style="color: #ff6600;">đặt áo</span>
 			</h3>
 			<div class="ht-contact">
@@ -50,7 +50,7 @@
 			</div>
 		</aside>
 		<section class="col-sm-9 container" style="margin-top: 15px;">
-			<form class="form-inline my-2 my-lg-0" style="padding-bottom: 30px;">
+			<form class="form-inline my-2 my-lg-0 ht-search-form" style="padding-bottom: 30px;">
 		      <input id="ht-search" class="form-control mr-sm-2 ht-search-shopping" type="search" placeholder="Tìm kiếm" aria-label="Search">
 		    </form>
 			<div class="row" style="margin-left: 10px; margin-right: 10px; padding-bottom: 10px; border-bottom: solid 0.5px darkgray;">
@@ -60,35 +60,39 @@
 				<div class="col-sm-1"></div>
 				<div class="col-sm-5">
 					<div class="dropdown show" style="width: 100%; ">
-					  <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 100%; padding: 0; border: solid 1px #ff6600;"> Sắp xếp theo </a>
+					  <a class="btn btn-secondary dropdown-toggle ht-sort-list" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 100%; padding: 0; border: solid 1px #ff6600;"> Sắp xếp theo </a>
 					  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="width: 100%; text-align: center;">
-					    <a class="dropdown-item" href="#" value="newest">Mới nhất</a>
-					    <a class="dropdown-item" href="#" value="lowest">Giá từ thấp đến cao</a>
-					    <a class="dropdown-item" href="#" value="highest">Giá từ cao đến thấp</a>
+					    <a class="dropdown-item ht-sort active" href="#" value="newest">Mới nhất</a>
+					    <a class="dropdown-item ht-sort" href="#" value="lowest">Giá từ thấp đến cao</a>
+					    <a class="dropdown-item ht-sort" href="#" value="highest">Giá từ cao đến thấp</a>
 					  </div>
 					</div>
 				</div>
 			</div>
 			<div class="row" style=" padding-top: 40px;">
-				{{#each lists}}
-					{{>product-shopping}}
-				{{/each}}
+			{{#each lists}}
+				{{>product-shopping}}
+			{{/each}}
 			</div>
+			{{#if needPage}}
 			<nav aria-label="Page navigation example">
 			  <ul class="pagination justify-content-center">
-			    <li class="page-item disabled">
+			    <!-- <li class="page-item {{#if prev}}disabled{{/if}}">
 			      <a class="page-link" href="#" tabindex="-1">Previous</a>
+			    </li> -->
+			    {{#each pages}}
+			    <li class="page-item {{#if active}}active{{/if}}">
+			    	<a class="page-link" href="?page={{number}}">{{number}}</a>
 			    </li>
-			    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-			    <li class="page-item"><a class="page-link" href="#">2</a></li>
-			    <li class="page-item"><a class="page-link" href="#">3</a></li>
-			    <li class="page-item"><i class="fas fa-ellipsis-h" style="padding-top: 10px;"></i></li>
-			    <li class="page-item"><a class="page-link" href="#">7</a></li>
-			    <li class="page-item">
-			      <a class="page-link" href="#">Next</a>
-			    </li>
+			    {{/each}}
+			    <!-- <li class="page-item"><i class="fas fa-ellipsis-h" style="padding-top: 10px;"></i></li>  -->
+			   <!--  <li class="page-item">
+			      <a class="page-link" href="" {{#if next}}disabled{{/if}}>Next</a>
+			    </li> -->
 			  </ul>
 			</nav>
+			{{/if}}
+
 		</section>
 	</div>
 </div>

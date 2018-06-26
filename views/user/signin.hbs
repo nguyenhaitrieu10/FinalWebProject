@@ -1,4 +1,4 @@
-{{#if hasErrors}}
+<!--  {{#if hasErrors}}
   <div class="alert alert-danger" class="alert-danger">
     {{#each messages}}
         <p>{{this}}</p>
@@ -19,4 +19,46 @@
   <input type="hidden" name="_csrf" value="{{csrfToken}}">
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
-<a href="/user/signup">do not have any account?</a>
+<a href="/user/signup">do not have any account?</a> 
+
+ -->
+
+<section class="container" style="padding-top: 62px; width: 50%;">
+  {{#if hasErrors}}
+  <div class="alert alert-danger" class="alert-danger" style="margin: 20px 0 0 0;">
+    {{#each messages}}
+    <p>{{this}}</p>
+    {{/each}}
+  </div>
+  {{/if}}
+  <div class="modal-header">
+    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+      <li class="nav-item"> 
+        <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Đăng nhập</a>
+      </li>
+    </ul>
+  </div>
+  <div class="modal-body">
+    <div class="tab-content" id="pills-tabContent">
+      <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+      <form action="/user/signin" method="post">
+        <div class="form-group">
+          <label for="exampleInputEmail">Email</label>
+          <input type="email" name="email" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="abc@example.com">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword">Mật khẩu</label>
+          <input type="password" name="password" class="form-control" id="exampleInputPassword" placeholder="Mật khẩu có ít nhất 6 ký tự">
+        </div>
+        <div style="padding: 20px 0;">
+          <label class="form-check-label" for="exampleCheck1"><a class="forget-password" href="#">Quên mật khẩu?</a></label>
+        </div>
+        <div class="form-modal">
+          <input type="hidden" name="_csrf" value="{{csrfToken}}">
+          <button type="submit" class="btn btn-primary ht-login">Đăng nhập</button>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+</section>

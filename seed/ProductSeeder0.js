@@ -41,7 +41,7 @@ var products = [
 	new Product({
 		title: "Áo Thun Ngắn Tay Cổ Tròn In Hình Go-ku Geometric",
 		type: 'polo',
-		price: 22,
+		price: 10,
 		origin: "sea_starclothing",
 		imagePath: "/img/sample02.jpg",
 		saleoff: 15,
@@ -52,7 +52,7 @@ var products = [
 	new Product({
 		title: "ÁO THUN SỌC TAY LỞ FORM RỘNG DÀI IN BÒ SỮA",
 		type: 'tee',
-		price: 50,
+		price: 10,
 		origin: "sea_starclothing",
 		imagePath: "/img/sample08.jpg",
 		saleoff: 0,
@@ -60,183 +60,6 @@ var products = [
 		color: 'blue',
 		number: 30
 	}),
-	new Product({
-		title: "Áo thun Phượt thủ",
-		type: 'tee',
-		price:	5,
-		origin: "Khai silk",
-		imagePath: "/img/sample2.jpg",
-		saleoff: 20,
-		description: "Với thiết kế trẻ trung, năng động, áo thun League Legends sẽ tạo cho khách hàng của bạn cảm giác thoải mái nhất khi mặc.",
-		color: 'blue',
-		number: 10
-	}),
-	new Product({
-		title: "Áo thể thao nam RUN (Áo nam)",
-		type: 'tee',
-		price:	17,
-		origin: "KIT Sport",
-		imagePath: "/img/sample01.jpg",
-		saleoff: 30,
-		description: "Sản phẩm chất lượng, được rất nhiều người ưa thích bởi những dòng sản phẩm mang phong cách đơn giản phù hợp với nhiều lứa tuổi, phong cách chính Châu Âu.",
-		color: 'black',
-		number: 10
-	}),
-	new Product({
-		title: "ÁO THUN NAM 3D THÁI LAN in hình sói yêu thương",
-		type: 'polo',
-		price:	22,
-		origin: "NICE GUY",
-		imagePath: "/img/sample05.jpg",
-		saleoff: 0,
-		description: "Chất liệu vải: thun lươi siêu thoáng mát, phù hợp cho mua hẻ nóng bức, thoải mái hoạt động không lo bị nóng.",
-		color: 'black',
-		number: 10
-	}),
-	new Product({
-		title: "ÁO THUN NAM 3D THÁI LAN in hình đầu lâu",
-		type: 'polo',
-		price:	29,
-		origin: "DIVASTORE",
-		imagePath: "/img/sample06.jpg",
-		saleoff: 5,
-		description: "Chất liệu vải: thun lươi siêu thoáng mát, phù hợp cho mua hẻ nóng bức, thoải mái hoạt động không lo bị nóng.",
-		color: 'white',
-		number: 10
-	}),
-	new Product({
-		title: "ÁO THUN NAM 3D in hình hoạt hình THÁI LAN",
-		type: 'polo',
-		price:	30,
-		origin: "greater.vn",
-		imagePath: "/img/sample07.jpg",
-		saleoff: 17,
-		description: "Chất liệu vải: thun lươi siêu thoáng mát, phù hợp cho mua hẻ nóng bức, thoải mái hoạt động không lo bị nóng.",
-		color: 'purple',
-		number: 10
-	}),
-	new Product({
-		title: "Áo thun nam tay ngắn in chữ Yeezus",
-		type: 'tee',
-		price:	100,
-		origin: "Khai silk",
-		imagePath: "/img/sample09.jpg",
-		saleoff: 0,
-		description: "Made of: Cotton, Edition type: Slim, Collar type: round neck collar, Style: Hedging, Pattern: letter printing, Suitable for season: summer, Thickness: conventional, Suitable for: Teenagers",
-		color: 'blue',
-		number: 10
-	}),
-	new Product({
-		title: "Áo thun nam nữ tay ngắn in chữ Thrasher",
-		type: 'tee',
-		price:	24,
-		origin: "Khai silk",
-		imagePath: "/img/sample10.jpg",
-		saleoff: 22,
-		description: "Với thiết kế trẻ trung, năng động, áo thun League Legends sẽ tạo cho khách hàng của bạn cảm giác thoải mái nhất khi mặc.",
-		color: 'red',
-		number: 10
-	}),
-	new Product({
-		title: "Áo thun nam tay dài in chữ Twenty One Pilots",
-		type: 'tee',
-		price:	28,
-		origin: "greater.vn",
-		imagePath: "/img/sample11.jpg",
-		saleoff: 0,
-		description: "Gender:Men, Item Type:Tops, Pattern Type:Print, Brand Name:Twenty One Pilots, Style:Fashion, Fabric Type:Broadcloth, Hooded:No, Material:Cotton, Polyester, Spandex, Acetate, Acrylic.",
-		color: 'black',
-		number: 10
-	}),
-	new Product({
-		title: "Áo thun nam tay ngắn in chữ Ramones",
-		type: 'polo',
-		price:	34,
-		origin: "greater.vn",
-		imagePath: "/img/sample12.jpg",
-		saleoff: 0,
-		description: "Gender:Men, Item Type:Tops, Pattern Type:Print, Brand Name:Twenty One Pilots, Style:Fashion, Fabric Type:Broadcloth, Hooded:No, Material:Cotton, Polyester, Spandex, Acetate, Acrylic.",
-		color: 'gray',
-		number: 10
-	}),
-	new Product({
-		title: "Áo thun dài tay cổ tròn họa tiết hình học",
-		type: 'polo',
-		price:	8,
-		origin: "greater.vn",
-		imagePath: "/img/sample13.jpg",
-		saleoff: 0,
-		description: "Season:Fall,Spring, Gender:Women, Occasion:Casual, Material:Polyester.",
-		color: 'blue',
-		number: 10
-	}),
-	new Product({
-		title: "Áo thun nam tay ngắn họa tiết sấm sét",
-		type: 'polo',
-		price:	5,
-		origin: "smartime.vn",
-		imagePath: "/img/sample14.jpg",
-		saleoff: 0,
-		description: "Gender:Men, Season:Spring,Summer, Occasion:Daily, Material:Poleyster, Decoration:None, Clothing Length:Regular, Pattern Type:Print, Sleeve Style:Regular, Style:Fashion,Causal, Collar:O- Collar, Sleeve Length:Short.",
-		color: 'blue',
-		number: 10
-	}),
-	new Product({
-		title: "Áo thun tay lỡ cổ tròn in hình tuần lộc Giáng sinh",
-		type: 'tee',
-		price:	22,
-		origin: "smartime.vn",
-		imagePath: "/img/sample15.jpg",
-		saleoff: 0,
-		description: "Material:Cotton Blend, Clothing, Length:Regular, Pattern, Type:Print,Striped, Sleeve, Style:Regula.",
-		color: 'black',
-		number: 10
-	}),
-	new Product({
-		title: "ÁO THUN NAM 2018 VẢI COTTON",
-		type: 'tee',
-		price:	189,
-		origin: "thoitrangcaocap",
-		imagePath: "/img/sample16.jpg",
-		saleoff: 0,
-		description: "Hàng rõ nguồn gốc, Không tuột đường chỉ,thoáng mát,thấm mồ hôi tốt, Dùng trong mọi hoạt động đi chơi ,giã ngoại,đi làm và đi tiệc.",
-		color: 'black',
-		number: 10
-	}),
-	new Product({
-		title: "Áo thun tay lỡ Nam nữ Unisex",
-		type: 'polo',
-		price:	88,
-		origin: "thoitrang_rubik_rainbow",
-		imagePath: "/img/sample17.jpg",
-		saleoff: 0,
-		description: "CHẤT LIỆU: THUN 4 CHIỀU DÀY MỊN CÓ 2 MÀU: ĐEN, TRẮNG.",
-		color: 'black',
-		number: 10
-	}),
-	new Product({
-		title: "Áo thun nam ngắn tay in hoạ tiết 3D",
-		type: 'polo',
-		price:	49,
-		origin: "fulai1.vn",
-		imagePath: "/img/sample19.jpg",
-		saleoff: 0,
-		description: "Material: Polyester Gender: Men or Women Season: Summer.",
-		color: 'white',
-		number: 10
-	}),
-	new Product({
-		title: "Áo thun tay lửng_ form đại",
-		type: 'polo',
-		price:	55,
-		origin: "nguyetcam00",
-		imagePath: "/img/sample20.jpg",
-		saleoff: 0,
-		description: "form đại dễ mặc từ #40kg_75kg đều đc . Đã vậy nam nữ đều mặc ok hết luôn. FORM NÀY LÀ CHẤT NGẤT LUÔN NHA CẢ NHÀ.",
-		color: 'white',
-		number: 10
-	}),
-
 ];
 
 var done = 0;
@@ -268,7 +91,7 @@ function exit(){
 //       }], {});
 //     */
 //     var tshirts = [
-//     !  {
+//       {
 //         name: "Áo thun trắng I Love You",
 //         type: "tee",
 //         color: ['white','blue'],
@@ -310,7 +133,7 @@ function exit(){
 //         createdAt: Sequelize.literal('NOW()'),
 //         updatedAt: Sequelize.literal('NOW()')
 //       },
-//      ! {
+//       {
 //         name: "Áo Thun Ngắn Tay Cổ Tròn In Hình Go-ku Geometric",
 //         type: "polo",
 //         color: ['black'],
@@ -324,7 +147,7 @@ function exit(){
 //         createdAt: Sequelize.literal('NOW()'),
 //         updatedAt: Sequelize.literal('NOW()')
 //       },
-//  !     {
+//       {
 //         name: "Áo thun cotton nhóm in họa tiết mùa hè giá sỉ",
 //         type: "tee",
 //         color: ['black'],
@@ -394,7 +217,7 @@ function exit(){
 //         createdAt: Sequelize.literal('NOW()'),
 //         updatedAt: Sequelize.literal('NOW()')
 //       },
-//    !   {
+//       {
 //         name: "ÁO THUN SỌC TAY LỞ FORM RỘNG DÀI IN BÒ SỮA",
 //         type: "tee",
 //         color: ['white'],

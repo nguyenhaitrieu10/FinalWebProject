@@ -5,10 +5,11 @@ var csrf = require('csurf');
 var Cart = require('../models/cart');
 var Order = require('../models/order');
 
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   var successMsg = req.flash('success')[0];
-  var products = Product.find({},null,{limit: 4},function(err,docs){
+  var products = Product.find({},'title imagePath',{limit: 8},function(err,docs){
   	res.render('shop/index', { title: 'Shopping cart',
   	products: docs,
     successMsg: successMsg
@@ -18,111 +19,184 @@ router.get('/', function(req, res, next) {
 
 router.get('/shopping', function(req, res, next) {
   let query = {};
+  let sort = {update: -1};
+  let page = 1;
+  let keywords = "";
+
   if (req.query.type != undefined)
     query.type = req.query.type;
   if (req.query.color != undefined)
     query.color = req.query.color;
-  if (req.query.sort != undefined)
-    query.sort = req.query.sort;
-  if (req.query.skip != undefined)
-    query.skip = req.query.skip;
-  
-  query.limit = 12;
-  query.skip = 1;
-  Product.find(function(err, tshirts){
-    console.log(tshirts);
-    res.render('shop/shopping',{lists: tshirts, count: tshirts.length});
+  if (req.query.page != undefined)
+    page = req.query.page;
+  if (req.query.search != undefined)
+    keywords = req.query.search;
+  if (req.query.sort != undefined){ 
+    if (req.query.sort == 'lowest')
+      sort = {price: 1};
+    else if (req.query.sort == 'highest')
+      sort = {price: -1};
+    else if (req.query.sort == 'newst')
+      sort = {update: -1};
+  }
+
+
+  let limit = 12;
+  let skip = (page-1)*limit;
+  if (keywords)
+    query.$text = { $search : keywords };
+
+  Product.find(query,"_id",null,function(err,result){
+    if (err){
+      return res.write('Error');
+    }
+    let number = result?((result.length/limit)<<0 + (result.length%limit==0?0:1)):0;
+
+    Product.find(query, null, {limit: limit, sort: sort, skip: skip}, function(err, tshirts){
+      let pages = [];
+      for (let i = 0; i < number; ++i){
+        pages.push({number: i+1});
+      }
+      if (pages[page-1])
+        pages[page-1].active = true;
+
+      console.log(pages);
+      res.render('shop/shopping', {
+        title: 'shopping',
+        lists: tshirts, 
+        count: result.length,
+        pages: pages,
+        isShopping: true,
+        needPage: number
+      });
+    });
   });
 });
 
-// router.get('/add-to-cart/:id',function(req, res, next){
-//   var productId = req.params.id;
-//   var cart = new Cart(req.session.cart?req.session.cart:{});
+router.get('/product/:_id', function(req, res, next) {
+  let id = req.params._id;
+  var products = Product.findOne({_id: id},function(err,tshirt){
+    if (err)
+      return res.redirect('/');
 
-//   Product.findById(productId, function(err, product){
-//     if (err){
-//       return res.redirect('/');
-//     }
-//     cart.add(product,productId);
-//     req.session.cart = cart;
-//     console.log(req.session.cart);
-//     res.redirect('/');
-//   });
+    let beforPrice = tshirt.saleoff?((tshirt.price / (1-tshirt.saleoff/100))>>0):(tshirt.price);
+    res.render('shop/product', { 
+      title: tshirt.title,
+      tshirt: tshirt,
+      beforPrice: beforPrice,
+      isShopping: true,
+      id: id
+   });  
+  });
+});
 
-// });
+router.get('/add-to-cart/:id',function(req, res, next){
+  var productId = req.params.id;
+  var cart = new Cart(req.session.cart?req.session.cart:{});
 
-// router.get('/reduce/:id',function(req, res, next){
-//   var productId = req.params.id;
-//   var cart = new Cart(req.session.cart?req.session.cart:{});
+  Product.findById(productId, function(err, product){
+    if (err){
+      return res.redirect('/');
+    }
+    cart.add(product,productId);
+    req.session.cart = cart;
+    res.redirect('/shopping');
+  });
+});
 
-//   cart.reduceByOne(productId);
-//   req.session.cart = cart;
-//   res.redirect('/shopping-cart');
-// });
+router.get('/reduce/:id',function(req, res, next){
+  var productId = req.params.id;
+  var cart = new Cart(req.session.cart?req.session.cart:{});
 
-// router.get('/remove/:id',function(req, res, next){
-//   var productId = req.params.id;
-//   var cart = new Cart(req.session.cart?req.session.cart:{});
+  cart.reduceByOne(productId);
+  req.session.cart = cart;
+  res.redirect('/shopping-cart');
+});
 
-//   cart.removeItem(productId);
-//   req.session.cart = cart;
-//   res.redirect('/shopping-cart');
-// });
+router.get('/increase/:id',function(req, res, next){
+  var productId = req.params.id;
+  var cart = new Cart(req.session.cart?req.session.cart:{});
 
-// router.get('/shopping-cart',function(req, res, next){
-//   if (!req.session.cart)
-//     return res.render('shop/shopping-cart',{products: {}});
-//   let cart = new Cart(req.session.cart);
-//   res.render('shop/shopping-cart',{products: cart.generateArray(), totalPrice: cart.totalPrice});
-// });
+  cart.increaseByOne(productId);
+  req.session.cart = cart;
+  res.redirect('/shopping-cart');
+});
 
-// router.get('/checkout', isLoggedIn, function(req, res, nex){
-//   if (!req.session.cart){
-//     return res.redirect('shopping-cart');
-//   }
+router.get('/remove/:id',function(req, res, next){
+  var productId = req.params.id;
+  var cart = new Cart(req.session.cart?req.session.cart:{});
 
-//   let cart = new Cart(req.session.cart);
-//   var errMsg = req.flash('error')[0];
-//   res.render('shop/checkout',{total: cart.totalPrice, errMsg: errMsg, noError: !errMsg});
-// });
+  cart.removeItem(productId);
+  req.session.cart = cart;
+  res.redirect('/shopping-cart');
+});
 
-// router.post('/checkout',isLoggedIn, function(req, res , next){
-//   if (!req.session.cart){
-//       return res.redirect('shopping-cart');
-//     }
+router.get('/shopping-cart',function(req, res, next){
+  if (!req.session.cart)
+    return res.render('shop/shopping-cart',{products: [], isCart: true,title: 'Shopping Cart' });
+  let cart = new Cart(req.session.cart);
 
-//   var cart = new Cart(req.session.cart);
-//   var stripe = require("stripe")("sk_test_J3AUFdÙ7L0WlAvCwcl8LeNb");
+  res.render('shop/shopping-cart',{
+    products: cart.generateArray(),
+    title: 'Shopping Cart', 
+    isCart: true,
+    totalPrice: cart.totalPrice
+  });
+});
 
-//   stripe.charges.create({
-//     amount: cart.totalPrice * 100000,
-//     currency: "usd",
-//     source: req.body.stripeToken, 
-//     description: "Test Charge"
-//   }, function(err, charge) {
-//     // asynchronously called
-//     if (err){
-//       req.flash('error',err.message);
-//       return res.redirect('/checkout');
-//     }
+router.get('/checkout', isLoggedIn, function(req, res, nex){
+  if (!req.session.cart){
+    return res.redirect('shopping-cart');
+  }
 
-//     var order = new Order({
-//       user: req.user,
-//       cart: cart,
-//       address: req.body.address,
-//       name: req.body.name,
-//       paymentId: charge.id
-//     });
+  let cart = new Cart(req.session.cart);
+  var errMsg = req.flash('error')[0];
+  res.render('shop/checkout',{total: cart.totalPrice, errMsg: errMsg, noError: !errMsg});
+});
 
-//     order.save(function(err, result){
-//       req.flash('success','Successfully bought product');
-//       req.session.cart = null;
-//       res.redirect('/');
-//     });
+router.post('/checkout',isLoggedIn, function(req, res , next){
+  if (!req.session.cart){
+      return res.redirect('shopping-cart');
+    }
+
+  var cart = new Cart(req.session.cart);
+  var stripe = require("stripe")("sk_test_J3AUFdU7L20WlAvCwcl8LeNb");
+
+  stripe.charges.create({
+    amount: cart.totalPrice * 100,
+    currency: "usd",
+    source: req.body.stripeToken, 
+    description: "Test Charge"
+  }, function(err, charge) {
+    // asynchronously called
+    if (err){
+      req.flash('error',err.message);
+      return res.redirect('/checkout');
+    }
+
+    var order = new Order({
+      user: req.user,
+      cart: cart,
+      address: req.body.address,
+      name: req.body.name,
+      paymentId: charge.id
+    });
+
+    order.save(function(err, result){
+      req.flash('success','Successfully bought product');
+      req.session.cart = null;
+      res.redirect('/');
+    });
 
     
-//   });
-// });
+  });
+});
+
+router.get('/design', function(req, res, next) {
+    res.render('shop/design', { 
+      title: 'Design Page',
+  });
+});
 
 module.exports = router;
 

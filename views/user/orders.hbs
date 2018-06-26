@@ -1,0 +1,26 @@
+<div class="container" style="padding-top: 60px; margin-top: 20px;">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h3 style="padding-bottom: 20px;background-color: #fff;color: #1ba8ff;font-weight: bold;border-bottom: #1ba8ff solid 1px;border-radius: 0;">Danh sách đơn hàng</h3>
+            {{# each orders }}
+            <div class="panel panel-default" style="padding: 20px 0;">
+                <label style="font-size: 0.8em">{{this.update}}</label>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        {{# each this.items }}
+                        <li class="list-group-item">
+                            <span class="badge">{{ this.price }} usd</span>
+                            {{ this.item.title }} | {{ this.qty }}
+                        </li>
+                        {{/each}}
+                    </ul>
+                </div>
+                <div class="panel-footer">
+                    <strong>Tổng tiền: ${{ this.cart.totalPrice }}</strong>
+                </div>
+                <hr>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</div>

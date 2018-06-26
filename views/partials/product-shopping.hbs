@@ -3,10 +3,11 @@
         <img class="card-img-top ht-card-img img-responsive" src="{{this.imagePath}}" alt="Card image cap">
         <div class="overlay">
            <h2>Free Style</h2>
-           <a class="info" href="/product/SP00{{this._id}}">Xem chi tiết</a>
+           <a class="info" href="/product/{{this._id}}">Xem chi tiết</a>
+           <!-- <a class="info add-to-cart" href="/add-to-cart/{{this._id}}">Thêm vào giỏ hàng</a> -->
         </div>
     </div>
-	<a href="./product">
+	<a href="/product/{{this._id}}">
 	  <div class="card-body">
 	    <p class="card-text-shopping">{{this.title}}</p>
 		{{#if saleoff}}

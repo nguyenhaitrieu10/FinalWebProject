@@ -1,154 +1,37 @@
-
 <script src="https://js.stripe.com/v3/"></script>
-
-<style media="screen">
-label {
-  font-family: "Helvetica Neue", Helvetica, sans-serif;
-  font-size: 16px;
-  font-variant: normal;
-  padding: 0;
-  margin: 0;
-  -webkit-font-smoothing: antialiased;
-}
-
-button {
-  border: none;
-  border-radius: 4px;
-  outline: none;
-  text-decoration: none;
-  color: #fff;
-  background: #32325d;
-  white-space: nowrap;
-  display: inline-block;
-  height: 40px;
-  line-height: 40px;
-  padding: 0 14px;
-  box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08);
-  border-radius: 4px;
-  font-size: 15px;
-  font-weight: 600;
-  letter-spacing: 0.025em;
-  text-decoration: none;
-  -webkit-transition: all 150ms ease;
-  transition: all 150ms ease;
-  float: left;
-  margin-left: 12px;
-  margin-top: 28px;
-}
-
-button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 7px 14px rgba(50, 50, 93, .10), 0 3px 6px rgba(0, 0, 0, .08);
-  background-color: #43458b;
-}
-
-form {
-  padding: 30px;
-  height: 120px;
-}
-
-label {
-  font-weight: 500;
-  font-size: 14px;
-  display: block;
-  margin-bottom: 8px;
-}
-
-#card-errors {
-  height: 20px;
-  padding: 4px 0;
-  color: #fa755a;
-}
-
-.form-row {
-  width: 70%;
-  float: left;
-}
-
-.token {
-  color: #32325d;
-  font-family: 'Source Code Pro', monospace;
-  font-weight: 500;
-}
-
-.wrapper {
-  width: 670px;
-  margin: 0 auto;
-  height: 100%;
-}
-
-#stripe-token-handler {
-  position: absolute;
-  top: 0;
-  left: 25%;
-  right: 25%;
-  padding: 20px 30px;
-  border-radius: 0 0 4px 4px;
-  box-sizing: border-box;
-  box-shadow: 0 50px 100px rgba(50, 50, 93, 0.1),
-    0 15px 35px rgba(50, 50, 93, 0.15),
-    0 5px 15px rgba(0, 0, 0, 0.1);
-  -webkit-transition: all 500ms ease-in-out;
-  transition: all 500ms ease-in-out;
-  transform: translateY(0);
-  opacity: 1;
-  background-color: white;
-}
-
-#stripe-token-handler.is-hidden {
-  opacity: 0;
-  transform: translateY(-80px);
-}
-
-/**
- * The CSS shown here will not be introduced in the Quickstart guide, but shows
- * how you can use CSS to style your Element's container.
- */
-.StripeElement {
-  background-color: white;
-  height: 40px;
-  padding: 10px 12px;
-  border-radius: 4px;
-  border: 1px solid transparent;
-  box-shadow: 0 1px 3px 0 #e6ebf1;
-  -webkit-transition: box-shadow 150ms ease;
-  transition: box-shadow 150ms ease;
-}
-
-.StripeElement--focus {
-  box-shadow: 0 1px 3px 0 #cfd7df;
-}
-
-.StripeElement--invalid {
-  border-color: #fa755a;
-}
-
-.StripeElement--webkit-autofill {
-  background-color: #fefde5 !important;
-}
-</style>
-
-{{errMsg}}
-<form action="/checkout" method="post" id="payment-form">
-  <div style="width: 70%;">
-    <label for="card-element">
-      Credit or debit card
-    </label>
-    <div id="card-element">
-      <!-- A Stripe Element will be inserted here. -->
+<style type="text/css" href="/css/checkout.css"></style>
+<div class="container" style="padding-top: 60px; margin-top: 20px;">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-8 offset-sm-2">
+        <form action="/checkout" method="post" id="payment-form">
+          <div style="padding-bottom: 10px;">
+            <h3 style="padding-bottom: 20px;background-color: #fff;color: #1ba8ff;font-weight: bold;border-bottom: #1ba8ff solid 1px;border-radius: 0;">
+            Thông tin thanh toán
+          </h3>
+            <label for="card-element" >
+              Credit or debit card
+            </label>
+            <div id="card-element" >
+              <!-- A Stripe Element will be inserted here. -->
+            </div>
+            <div >
+                <label for="name">Người nhận:</label>
+                <input type="text" name="name" style="width: 100%" required>
+            </div>
+            <div>
+                <label for="address">Địa chỉ:</label>
+                <input type="text" name="address" style="width: 100%" required>
+            </div>
+            <!-- Used to display form errors. -->
+            <div id="card-errors" role="alert"></div>
+          </div>
+          <button class="btn btn-success" style="width: 100%">Thanh toán</button>
+        </form>
+      </div>
     </div>
-    <div >
-        <label for="name">Customer name:</label>
-        <input type="text" name="name" required>
-    </div>
-    <div>
-        <label for="address">Address:</label>
-        <input type="text" name="address" required>
-    </div>
-    <!-- Used to display form errors. -->
-    <div id="card-errors" role="alert"></div>
   </div>
-  <button>Submit Payment</button>
-</form>
-
+  
+</div>
+{{errMsg}}
 <script type="text/javascript" src="js/checkout.js"></script>
