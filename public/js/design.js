@@ -6,6 +6,7 @@ var designer = new CanvasDesigner();
 designer.widgetHTML = '/widget.html';
 designer.widgetJsURL = '/js/widget.js'
 
+var exportUrl = '';
 
 designer.setSelected('line');
 
@@ -114,6 +115,7 @@ document.getElementById('export-as-image').onclick = function() {
     document.getElementById('fade').style.display = 'block';
 
     getDataURL();
+
 };
 
 function getDataURL(callback) {
@@ -124,7 +126,7 @@ function getDataURL(callback) {
         linkToImage.href = dataURL;
         linkToImage.innerHTML = 'Click to Download Image';
         linkToImage.download = 'image.' + (format || 'image/png').split('/')[1];
-
+        exportUrl = dataURL;
         callback(dataURL, format);
     });
 }
@@ -143,11 +145,23 @@ if (localStorage.getItem('data-url-format')) {
     dataURLFormat.onchange();
 }
 
-$('#finish-design').click(function(){
-    alert('Hãy đăng nhập để mua hàng! Đăng ký ngay Nếu bạn chưa có tài khoản');
-    $('.header-login').trigger('click');
+// $('#finish-design').click(function(){
+//     alert('Hãy đăng nhập để mua hàng! Đăng ký ngay Nếu bạn chưa có tài khoản');
+//     $('.header-login').trigger('click');
+// });
+
+// $('#finish-design-member').click(function(){
+//     window.location.replace("member-product.html");
+// });
+
+$('#ht-design').click(function(e){
+    r = confirm('Bạn đã hoàn thành trang vẽ?');
+    if (r){
+        getDataURL(function(dataURL, format){  
+            $('#form-path').val(dataURL);
+            $('form#add-design').submit();
+        });
+    }
 });
 
-$('#finish-design-member').click(function(){
-    window.location.replace("member-product.html");
-});
+// module.exports = exportUrl;

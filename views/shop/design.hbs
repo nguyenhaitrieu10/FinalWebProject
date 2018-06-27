@@ -7,10 +7,14 @@
         <button id="btn-display-undo-popup" class="hvr-outline-out" style="display: block; margin: 5px; float: right; border: none;"><i class="fas fa-undo"></i></button>
         <button id="export-as-image" style="display: block; margin: 5px; ">Xuất ảnh</button>
         <button id="ht-design" style="display: block; margin: 5px; float: right; background-color: #ff6600;
-color: #fff;" class="hvr-icon-fade hvr-bounce-in">
-        Hoàn tất
-        <i class="fa fa-check hvr-icon" style="padding: 5px;"></i> 
-        </button>
+    color: #fff;" class="hvr-icon-fade hvr-bounce-in">
+                Hoàn tất
+                <i class="fa fa-check hvr-icon" style="padding: 5px;"></i> 
+            </button>
+        <form id="add-design" method="post" action="/add-design">
+            <button style="visibility: hidden;"></button>
+            <input id="form-path" type="hidden" name="path" value="456">
+        </form>
     </div>
 
     <div id="light" class="white_content">
@@ -39,5 +43,5 @@ color: #fff;" class="hvr-icon-fade hvr-bounce-in">
         <a id="link-to-image" target="_blank" download="image.png"></a>
 
     </div>
-    <script src="/js/design.js"></script>
 </section>
+<script src="/js/design.js"></script>

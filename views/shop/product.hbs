@@ -1,8 +1,15 @@
 <section class="container" style="padding-top: 62px;">
 	<div class="row" style="margin-top: 30px; background-color: #fff;">
+		{{#if tshirt.madeBy}}
+		<div class="ht-img-lg col-lg-6 col-sm-12 "
+		style="height: 500px; background-image: url(/img/tshirt/white.png);background-repeat: no-repeat;">
+			<img src="{{tshirt.imagePath}}" alt="" style="width: 190px;height: 350px;border: none;margin-left: 142px;margin-top: 58px;">
+		</div>
+		{{else}}
 		<div class="ht-img-lg col-lg-6 col-sm-12 hvr-grow">
 			<img src="{{tshirt.imagePath}}" alt="" style="width:90%; height:70%;">
 		</div>
+		{{/if}}
 		<div class="ht-info-detail col-lg-6 col-sm-12">
 			<h3>{{tshirt.title}}</h3>
 			<!-- <h6 style="color:gray; margin-left: 10px">Mã sản phẩm: <span style="color:blue">SP00{{tshirt.code}}</span></h6> -->
