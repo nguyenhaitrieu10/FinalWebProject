@@ -12,6 +12,7 @@ var userSchema = new Schema({
 	status: {type: Boolean, require: true},
 	birth: {type: String, require: false},
 	idCard: {type: String, require: false},
+	role: {type: String, require: false}
 });
 
 userSchema.methods.encryptPassword = function(password){

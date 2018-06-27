@@ -209,7 +209,7 @@ router.get('/design', function(req, res, next) {
   // update: {type: Date, default: new Date()},
   // madeBy: {type: Schema.Types.ObjectId, ref: 'User', require: false},
 
-router.post('/add-design', isLoggedIn, function(req, res, next) {
+router.post('/add-design', function(req, res, next) {
   let path = req.body.path;
 
   var product = new Product({
@@ -226,7 +226,7 @@ router.post('/add-design', isLoggedIn, function(req, res, next) {
   });
 
   product.save(function(err, result){
-    res.redirect('/');
+    res.redirect('/product/' + result._id);
   });
 });
     // var order = new Order({

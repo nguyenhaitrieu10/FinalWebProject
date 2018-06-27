@@ -1,5 +1,6 @@
 var passport = require('passport');
 var User = require('../models/user');
+var Admin = require('../models/admin');
 var localStrategy = require('passport-local').Strategy;
 
 
@@ -16,7 +17,7 @@ passport.deserializeUser(function(id, done){
 passport.use('local.signup', new localStrategy({
 	usernameField: 'email',
 	passwordField: 'password',
-	passReqToCallback: true
+	passReqToCallback: true									
 }, function(req, email, password, done){
 	req.checkBody('email','Invalid email').notEmpty().isEmail();
 	req.checkBody('password','Invalid password').notEmpty().isLength({min: 6});
@@ -52,6 +53,7 @@ passport.use('local.signup', new localStrategy({
 		newUser.address = req.body.address;
 		newUser.phone = req.body.phone;
 		newUser.birth = req.body.birth;
+		newUser.status = true;
 	});
 }));
 

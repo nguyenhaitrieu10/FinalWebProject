@@ -4,6 +4,7 @@ var Product = require('../models/product');
 var csrf = require('csurf');
 passport = require('passport'); 
 var flash = require('connect-flash');
+var request = require('request');
 
 var csrfProtection = csrf();
 router.use(csrfProtection);
@@ -56,17 +57,17 @@ router.get('/signup', function(req, res, next){
 });
 
 
-router.post('/signup', passport.authenticate('local.signup',{
+router.post('/signup', checkCaptcha, passport.authenticate('local.signup',{
 	failureRedirect: '/user/signup',
 	failureFlash: true
 }), function(req, res, next){
 	if (req.session.oldUrl){
-		var oldUrl = req.session.oldUrl;
-		req.session.oldUrl = null;
-		res.redirect(oldUrl);
+			var oldUrl = req.session.oldUrl;
+			req.session.oldUrl = null;
+			res.redirect(oldUrl);
 	} else {
-		res.redirect('/user/profile');
-	}
+			res.redirect('/user/profile');
+	}	
 });
 
 
@@ -88,6 +89,35 @@ router.post('/signin', passport.authenticate('local.signin',{
 		res.redirect('/user/profile');
 	}
 });
+
+function checkCaptcha(req, res, next){
+  req.body.captcha = req.body['g-recaptcha-response'];	
+  if(
+    req.body.captcha === undefined ||
+    req.body.captcha === '' ||
+    req.body.captcha === null
+  ){
+  	messages = ['Please select captcha'];
+	return res.render('user/signup',{csrfToken: req.csrfToken(), messages: messages, hasErrors: messages.length > 0, title: 'Sign Up'});
+  }
+
+  const secretKey = '6LdpvDEUAAAAAHszsgB_nnal29BIKDsxwAqEbZzU';
+
+  const verifyUrl = `https://google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${req.body.captcha}&remoteip=${req.connection.remoteAddress}`;
+
+  request(verifyUrl, (err, response, body) => {
+    body = JSON.parse(body);
+    console.log(body);
+
+    if(body.success !== undefined && !body.success){
+    	messages = ['Failed captcha verification'];
+		return res.render('user/signup',{csrfToken: req.csrfToken(), messages: messages, hasErrors: messages.length > 0, title: 'Sign Up'});
+    }
+
+    //If Successful
+    return next();
+  });
+}
 
 function isLoggedIn(req, res, next){
 	if (req.isAuthenticated()){

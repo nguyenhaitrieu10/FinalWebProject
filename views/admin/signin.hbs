@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Admin</title>
+	<script src="/js/jquery-3.3.1.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/css/admin.css">
+</head>
+<body>
+	<div id="container">
+		{{#if hasErrors}}
+		  <div class="alert alert-danger" class="alert-danger" style="margin: 0 0 20px; text-align: center;">
+		    {{#each messages}}
+		    <p>{{this}}</p>
+		    {{/each}}
+		  </div>
+		{{/if}}
+		<div class="login-page">
+		    <div class="login-main">  	
+		    	 <div class="login-head">
+						<h1>Admin</h1>
+					</div>
+					<div class="login-block">
+						<form id="admin" method="post" action="/admin/signin">
+							<input type="text" name="email" placeholder="Email" required="">
+							<input type="password" name="password" class="lock" placeholder="Mật khẩu">
+          					<input type="hidden" name="_csrf" value="{{csrfToken}}">
+							<input type="submit" name="Sign In" value="Đăng nhập">
+						</form>
+						<h5><a href="/">Về trang chủ</a></h5>
+					</div>
+		      </div>
+		</div>
+	</div>
+</body>
+</html>

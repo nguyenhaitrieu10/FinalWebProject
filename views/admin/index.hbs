@@ -1,0 +1,125 @@
+	<!--<ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="">Home</a><i class="fa fa-angle-right"></i>Tabels</li>
+        </ol> -->
+<div class="four-grids row">
+	<div class="col-md-3 four-grid hvr-float-shadow">
+		<div class="four-agileits">
+			<div class="icon">
+				<i class="fas fa-users"></i>
+			</div>
+			<div class="four-text">
+				<a href="/admin/users"><h3>Người dùng</h3></a>
+				<h4> {{numUser}}  </h4>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-3 four-grid hvr-float-shadow">
+		<div class="four-agileinfo">
+			<div class="icon">
+				<i class="fas fa-th-list"></i>
+			</div>
+			<div class="four-text">
+				<a href="/admin/orders"><h3>Đơn hàng</h3></a>
+				<h4>{{numOrder}}</h4>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-3 four-grid hvr-float-shadow">
+		<div class="four-w3ls">
+			<div class="icon">
+				<i class="fas fa-dolly-flatbed"></i>
+			</div>
+			<div class="four-text">
+				<a href="/admin/products"><h3>Sản phẩm</h3></a>
+				<h4>{{numProduct}}</h4>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-3 four-grid hvr-float-shadow">
+		<div class="four-wthree" >
+			<div class="icon">
+				<i class="fas fa-history"></i>
+			</div>
+			<div class="four-text">
+				<a href="/"><h3>Lượt view ngày</h3></a>
+				<h4>430</h4>
+			</div>						
+		</div>
+	</div>
+	<div class="clearfix"></div>
+</div>
+
+<!--agileinfo-grap-->
+<div class="agileinfo-grap">
+	<div class="agileits-box">
+		<header class="agileits-box-header clearfix">
+		<h3>Thống kê</h3>
+			<div class="toolbar">
+				<div class="pull-left">
+					<div class="btn-group">
+						<a href="#" class="btn btn-default btn-xs active">Hàng tháng</a>
+					</div>
+				</div>
+			</div>
+		</header>
+		<div class="col-md-12 chart-laýer-left"> 
+			<div class="glocy-chart">
+				<div class="span-2c">  
+                    <h3 class="tlt"></h3>
+                    <canvas id="bar" height="300" width="440" style="width: 440px; height: 300px;"></canvas>
+                    <script>
+                        var barChartData = {
+                        labels : ["Tháng 1","Tháng 2","Tháng 3","Tháng 4","Tháng 5","Tháng 6","Tháng 7","Tháng 8","Tháng 9","Tháng 10","Tháng 11","Tháng 12"],
+                        datasets : [
+                            // {
+                            //     fillColor : "#FC8213",
+                            //     data : [65,59,90,81,56,55,40,65,59,90,81,56]
+                            // },
+                            {
+                                fillColor : "#337AB7",
+                                //data : [28,48,40,19,96,27,100,77,59,96,27,100]
+                                data: [{{statistic}}]
+                            }
+                        ]
+
+                    };
+                        new Chart(document.getElementById("bar").getContext("2d")).Bar(barChartData);
+                    </script>
+                </div> 			  		   			
+			</div>
+			<!-- <div style="width: 20px; height: 20px; background-color: #FC8213; display: inline-block; margin-left: 10px;"></div>
+			<span>Số lượng áo bán</span> -->
+			<div style="width: 20px; height: 20px; background-color: #337AB7; display: inline-block; margin-left: 10px;"></div>
+			<span>Thu nhập</span>
+		</div>
+	</div>
+</div>
+<div class="agile-grids">	
+	<!-- tables -->				
+	<div class="agile-tables">
+		<div class="w3l-table-info">
+		  <h2>
+		  	Giao dịch gần nhất trong tháng 
+		  </h2>
+		    <table id="table">
+			<thead>
+			  <tr>
+				<th>Thời gian</th>
+				<th>Số lượng áo</th>
+				<th>Tổng tiền (usd)</th>
+			  </tr>
+			</thead>
+			<tbody>
+			{{#each orders}}
+			  <tr>
+				<td>{{update}}</td>
+				<td>{{cart.totalQty}}</td>
+				<td>{{cart.totalPrice}}</td>
+			  </tr>
+			{{/each}}
+			</tbody>
+		  </table>
+		</div>
+	</div>
+	<!-- //tables -->
+</div>

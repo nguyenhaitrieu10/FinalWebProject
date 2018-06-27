@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Free Style</title>
+	<script src="/js/popper.js"></script>
+	<script src="/js/jquery-3.3.1.min.js"></script>
+	<link rel="stylesheet" href="/css/fontawesome-all.css">
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+	<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/css/admin-home.css">
+	<link rel="stylesheet" href="/css/morris.css" type="text/css"/>
+	<link rel="stylesheet" type="text/css" href="/css/table-style.css" />
+	<link rel="stylesheet" type="text/css" href="/css/basictable.css" />
+	<script type="text/javascript" src="/js/Chart.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/hover-button.css">
+    <link rel="stylesheet" href="/css/hover-min.css">
+</head>
+<body>
+   <!--/content-inner-->
+	<div class="left-content">
+	   <div class="mother-grid-inner">
+            <!--header start here-->
+			<div class="header-main" style="padding: 0.5em;">
+				<div class="logo-w3-agile">
+					<a href="/"><img src="/img/logo.png" style="height: 50px;"></a>
+				</div>
+				<div class="profile_details w3l" style="height: 70px; float: right;">		
+					<ul>
+						<li class="dropdown profile_details_drop">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" >
+								<div class="profile_img">	
+									<span class="prfil-img" ><img style="background-color: #fff;" src="/img/admin.png" alt=""> </span> 
+									<div class="user-name">
+										<p>Admin</p>
+									</div>
+									<div class="clearfix"></div>	
+								</div>	
+							</a>
+							<ul class="dropdown-menu drp-mnu" aria-labelledby="dropdownMenuButton" style="text-align: center;">
+								<!-- <li> <a href="#"><i class="fa fa-cog"></i> Settings</a> </li>  -->
+								<!-- <li> <a href="./admin-user-info"> Tài khoản</a> </li>  -->
+								<li> <a href="/admin/logout">Đăng xuất</a> </li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+				 <div class="w3layouts-right" style="height: 70px; float: right; background-color: #ff9501;display: none;">
+					<div class="profile_details_left"><!--notifications of menu start -->
+						<ul class="nofitications-dropdown">
+							<li class="dropdown	 head-dpdn">
+								<a href="./admin-user" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+									<i class="fa fa-bell"></i>
+									<span class="badge blue">3</span>
+								</a>
+							</li>	
+							<li class="dropdown head-dpdn">
+								<a href="./admin-order" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+									<i class="fa fa-tasks"></i>
+									<span class="badge blue1">9</span>
+								</a>
+							</li>	
+							<div class="clearfix"> </div>
+						</ul>
+						<div class="clearfix"> </div>
+					</div>
+					<!--notification menu end -->
+					<div class="clearfix"> </div>				
+				</div>
+			    <div class="clearfix"> </div>	
+			</div>
+			<!--heder end here-->
+<!-- 			<ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="">Home</a><i class="fa fa-angle-right"></i>Tabels</li>
+            </ol> -->
+			{{{body}}}
+
+		</div>
+	</div>
+  <!--//content-inner-->
+
+		<!--/sidebar-menu-->
+	<div class="sidebar-menu">
+        <header class="logo1">
+            <h5 style="color: #fff; margin: 0;"> Quản lí </h5> 
+        </header>
+        <div style="border-top:1px ridge rgba(255, 255, 255, 0.15)"></div>
+           <div class="menu">
+                <ul id="menu" >
+                    <li><a href="/admin/index">
+                        <i class="fa fa-signal"></i> <span>Thống kê</span><div class="clearfix"></div></a>
+                    </li>
+                     <li id="menu-academico" >
+                        <a href="/admin/orders"><i class="fas fa-th-list"></i></i><span>Đơn hàng</span><div class="clearfix"></div></a>
+                     </li>
+                    <li>
+                        <a href="/admin/products"><i class="fas fa-dolly-flatbed"></i><span>Kho sản phẩm</span><div class="clearfix"></div></a>
+                    </li>
+                    <li id="menu-academico" >
+                        <a href="/admin/users"><i class="fas fa-users"></i><span>Người dùng</span><div class="clearfix"></div></a>
+                    </li>
+<!--                      <li id="menu-academico" style="display: none;" >
+                        <a href="./admin-history"><i class="fas fa-history"></i><span>Lịch sử giao dịch</span><div class="clearfix"></div></a>
+                    </li> -->
+                </ul>
+            </div>
+        </div>
+        <div class="clearfix"></div>        
+    </div>
+
+</body>
+</html>

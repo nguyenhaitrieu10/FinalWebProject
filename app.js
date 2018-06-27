@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var expressHsb = require('express-handlebars');
 var indexRouter = require('./routes/index'); // Router
 var userRouter = require('./routes/user'); // Router
+var adminRouter = require('./routes/admin'); // Router
 var mongoose = require('mongoose');
 var session = require('express-session');
 var passport = 	require('passport');
@@ -14,7 +15,7 @@ var flash = require('connect-flash');
 var validator = require('express-validator');
 var paginateHelper = require('express-handlebars-paginate');
 var MongoStore = require('connect-mongo')(session);
-
+var request = require('request')
 var app = express();
 
 
@@ -56,6 +57,7 @@ app.use(function(req, res, next){
 });
 
 app.use('/user',userRouter); // set Router for user family
+app.use('/admin', adminRouter); // set Router for admin family
 app.use('/', indexRouter); // set Router for index family
 
 // catch 404 and forward to error handler
@@ -71,9 +73,9 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('other/error');
+  res.write('error');
+  // res.render('other/error',{layout: null});
 });
-
 
 
 app.listen(3000, function(){

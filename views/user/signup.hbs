@@ -22,6 +22,7 @@
 
  -->
 
+<script src='https://www.google.com/recaptcha/api.js'></script>
 
 <section class="container" style="padding-top: 62px; width: 50%;">
   {{#if hasErrors}}
@@ -38,11 +39,11 @@
       </li>
     </ul>
   </div>
-  <form action="/user/signup" method="post">
+  <form id="subscribeForm" action="/user/signup" method="post">
     <div class="form-row">
       <div class="form-group col-md-6">
         <label for="inputEmail">Email</label>
-        <input type="email" name="email" class="form-control" id="inputEmail" placeholder="Email" required>
+        <input type="email" name="email"  id="email" class="form-control" id="inputEmail" placeholder="Email" required>
       </div>
       <div class="form-group col-md-6">
         <label for="inputPassword">Mật khẩu</label>
@@ -51,7 +52,7 @@
     </div>
     <div class="form-group">
       <label for="inputAddress">Họ tên</label>
-      <input type="text" name="name" class="form-control" id="inputAddress" placeholder="Nhập họ tên" required>
+      <input type="text" name="name" id="name"class="form-control" id="inputAddress" placeholder="Nhập họ tên" required>
     </div>
     <div class="form-group">
       <label for="inputAddress">Địa chỉ</label>
@@ -69,6 +70,7 @@
       </div>
     </div>
     <div style="text-align: right;">
+      <div class="g-recaptcha" data-sitekey="6LdpvDEUAAAAAMy8x0y8PS99j4BavfO2oBdVTQGZ"></div>
       <input type="hidden" name="_csrf" value="{{csrfToken}}">
       <button type="submit" class="btn btn-primary" style="width: 100%;">Đăng ký</button>
     </div>
