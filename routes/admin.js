@@ -63,6 +63,38 @@ router.get('/index', isAdminLoggedIn, function(req, res, next){
   	});
 });
 
+router.post('/ban/:id', isAdminLoggedIn, function(req, res, next){
+	let id = req.params.id;
+	User.findOne({_id: id}, function(err, user){
+		if (err){
+			return res.redirect('/admin/users');
+		}
+		user.status = false;
+		user.save(function(err, result){
+			if (err)
+				return res.write('error');
+    		return res.redirect('/admin/users');
+		});
+	});
+});
+
+
+router.post('/deban/:id', isAdminLoggedIn, function(req, res, next){
+	let id = req.params.id;
+	User.findOne({_id: id}, function(err, user){
+		if (err){
+			return res.redirect('/admin/users');
+		}
+		user.status = true;
+		user.save(function(err, result){
+			if (err)
+				return res.write('error');
+    		return res.redirect('/admin/users');
+		});
+	});
+});
+
+
 router.get('/orders', isAdminLoggedIn, function(req, res, next){
 	res.render('admin/orders',{
 		layout: 'admin-layout'
@@ -77,10 +109,10 @@ router.get('/users', isAdminLoggedIn, function(req, res, next){
 		res.render('admin/users',{
 			layout: 'admin-layout',
 			users: users,
-			numUsers: users.length
+			numUsers: users.length,
+			csrfToken: req.csrfToken()
 		});	
 	});
-	
 });
 
 router.get('/products', isAdminLoggedIn, function(req, res, next){
@@ -162,7 +194,6 @@ router.post('/signin', passport.authenticate('local.signin',{
 }), function(req, res, next){
 	res.redirect('/admin/index');
 });
-
 
 
 function isAdminLoggedIn(req, res, next){

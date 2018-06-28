@@ -27,9 +27,9 @@
 				<td>{{email}}</td>
 				<td>{{phone}}</td>
 				{{#if status}}
-				<td><a href="#" class="badge badge-success">Active</a></td>
+				<td><button value="{{_id}}" class="badge badge-success user-status active">Active</button></td>
 				{{else}}
-				<td><a href="#" class="badge badge-secondary">Inactive</a></td>
+				<td><button value="{{_id}}" class="badge badge-secondary user-status">Inactive</button></td>
 				{{/if}}
 			  </tr>
 			 {{/each}}
@@ -37,15 +37,23 @@
 		  </table>
 		</div>
 	</div>
+	<form id="banUser" action="/ban" method="post">
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+	</form>
 	<!-- //tables -->
 	<nav aria-label="Page navigation example">
 	  <ul class="pagination justify-content-center">
 	    <li class="page-item disabled">
 	      <a class="page-link" href="#" tabindex="-1">Previous</a>
 	    </li>
-	    <li class="page-item"><a class="page-link" href="#">1</a></li>
-	      <a class="page-link" href="#">Next</a>
+	    <li class="page-item ">
+	    	<a class="page-link" href="#">1</a>
+	    </li>
+	    <li class="page-item disabled">
+	      <a class="page-link " href="#">Next</a>
 	    </li>
 	  </ul>
 	</nav>
 </div>
+
+<script type="text/javascript" src="/js/admin-users.js"></script>

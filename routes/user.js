@@ -207,7 +207,7 @@ function checkCaptcha(req, res, next){
 }
 
 function isLoggedIn(req, res, next){
-	if (req.isAuthenticated()){
+	if (req.isAuthenticated() && req.user && req.user.status){
 		return next();
 	}
 	res.redirect('/');

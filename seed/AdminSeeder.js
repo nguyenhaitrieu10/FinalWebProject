@@ -9,7 +9,8 @@ var admins = [
 		email: "admin123123@gmail.com",
 		password: 'rootadmin',
 		name: 'admin',
-		role: 'admin'
+		role: 'admin',
+		status: true
 	})
 ];
 

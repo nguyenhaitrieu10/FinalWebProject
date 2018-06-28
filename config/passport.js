@@ -80,6 +80,9 @@ passport.use('local.signin', new localStrategy({
 			return done(err);
 		if (!user)
 			return done(null,false,{message: "No user found"});
+		if (user.role !== 'admin' && !user.status)
+			return done(null,false,{message: "Account is blocked"});
+
 		if (!user.validPassword(password)){
 			return done(null,false,{message: 'Wrong Password'});
 		}
