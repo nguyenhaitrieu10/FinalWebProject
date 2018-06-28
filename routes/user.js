@@ -11,6 +11,7 @@ router.use(csrfProtection);
 
 var Order = require('../models/order');
 var Cart = require('../models/cart');
+var User = require('../models/user');
 
 router.get('/orders', isLoggedIn, function(req, res, nex){
 	Order.find({user: req.user}, null, {sort: {update: -1}},function(err, orders){
@@ -28,16 +29,98 @@ router.get('/orders', isLoggedIn, function(req, res, nex){
 
 
 router.get('/profile', isLoggedIn, function (req, res, next) {
-    Order.find({user: req.user}, function(err, orders) {
+	var messages = req.flash('error');
+    User.findOne({_id: req.user._id}, function(err, user) {
         if (err) {
             return res.write('Error!');
         }
-        var cart;
-        orders.forEach(function(order) {
-            cart = new Cart(order.cart);
-            order.items = cart.generateArray();
+
+        res.render('user/profile', { 
+			csrfToken: req.csrfToken(), 
+			messages: messages, 
+        	title: 'User Infomation',
+        	user: user
         });
-        res.render('user/profile', { orders: orders });
+    });
+});
+
+
+router.post('/profile', isLoggedIn, function (req, res, next) {
+	req.checkBody('name','Invalid name').notEmpty();
+	req.checkBody('address','Invalid adress').notEmpty();
+	req.checkBody('phone','Invalid phone').notEmpty().isLength({min: 8});
+	req.checkBody('birth','Invalid birth').notEmpty();
+	var errors = req.validationErrors();
+	if (errors) {
+		var messages = [];
+		errors.forEach(function(error){
+			messages.push(error.msg);
+		});
+		req.flash('error',messages)
+		return res.redirect('/');
+	}
+
+	let update = {};
+	update.name = req.body.name;
+	update.address = req.body.address;
+	update.phone = req.body.phone;
+	update.birth = req.body.birth;
+
+    User.updateOne({_id: req.user._id}, update,function(err, user) {
+        if (err) {
+            return res.write('Error!');
+        }
+        req.flash('success','Successfully update information');
+    	res.redirect('/');
+    });
+});
+
+router.get('/password', isLoggedIn, function (req, res, next) {
+	var messages = req.flash('error');
+
+    res.render('user/password', { 
+		csrfToken: req.csrfToken(), 
+		messages: messages,
+		hasErrors:  messages.length > 0,
+    	title: 'User Change Password',
+    });
+});
+
+router.post('/password', isLoggedIn, function (req, res, next) {
+	req.checkBody('old','Invalid password').notEmpty().isLength({min: 6});
+	req.checkBody('new','Invalid password').notEmpty().isLength({min: 6});
+	req.checkBody('renew','Invalid password').notEmpty().isLength({min: 6});
+
+	var errors = req.validationErrors();
+	var messages = [];
+	if (errors) {
+		errors.forEach(function(error){
+			messages.push(error.msg);
+		});
+		req.flash('error',messages)
+		return res.redirect('/');
+	}
+
+	let newPassword = req.body.new;
+	let oldPassword = req.body.old;
+
+    User.findOne({_id: req.user._id},function(err, user) {
+        if (err) {
+            return res.write('Error!');
+        }
+        if (!user.validPassword(oldPassword)){
+        	messages.push('Wrong password');
+			req.flash('error',messages)
+    		return res.redirect('/user/password');
+        }
+
+        user.password = user.encryptPassword(newPassword);
+        user.save(function(err, result){
+			if (err)
+				return res.write('error');
+			req.flash('success','Successfully update information');
+    		return res.redirect('/');
+		});
     });
 });
 
@@ -53,7 +136,11 @@ router.use('/',notLoggedIn, function(req, res, next){
 
 router.get('/signup', function(req, res, next){
 	var messages = req.flash('error');
-	res.render('user/signup',{csrfToken: req.csrfToken(), messages: messages, hasErrors: messages.length > 0, title: '	Sign Up'});
+	res.render('user/signup',{
+		csrfToken: req.csrfToken(), 
+		messages: messages, 
+		hasErrors: messages.length > 0, 
+		title: 'Sign Up'});
 });
 
 

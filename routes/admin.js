@@ -164,6 +164,7 @@ router.post('/signin', passport.authenticate('local.signin',{
 });
 
 
+
 function isAdminLoggedIn(req, res, next){
 	if (req.isAuthenticated() && req.user && req.user.role == 'admin'){
 		return next();

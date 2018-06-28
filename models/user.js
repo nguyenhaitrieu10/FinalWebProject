@@ -11,7 +11,6 @@ var userSchema = new Schema({
 	phone: {type: String, require: true},
 	status: {type: Boolean, require: true},
 	birth: {type: String, require: false},
-	idCard: {type: String, require: false},
 	role: {type: String, require: false}
 });
 

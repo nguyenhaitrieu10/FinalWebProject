@@ -197,17 +197,6 @@ router.get('/design', function(req, res, next) {
       title: 'Design Page',
   });
 });
-  // title: {type: String, require: true},
-  // imagePath: {type: String, require: true},
-  // description: {type: String, require: true},
-  // price: {type: Number, require: true},
-  // type: {type: String, require: true}, //polo or tee
-  // origin: {type: String, require: true},
-  // saleoff: {type: Number, require: true},
-  // color: {type: String, require: true},
-  // number: {type: Number, require: true},
-  // update: {type: Date, default: new Date()},
-  // madeBy: {type: Schema.Types.ObjectId, ref: 'User', require: false},
 
 router.post('/add-design', function(req, res, next) {
   let path = req.body.path;
@@ -229,19 +218,7 @@ router.post('/add-design', function(req, res, next) {
     res.redirect('/product/' + result._id);
   });
 });
-    // var order = new Order({
-    //   user: req.user,
-    //   cart: cart,
-    //   address: req.body.address,
-    //   name: req.body.name,
-    //   paymentId: charge.id
-    // });
 
-    // order.save(function(err, result){
-    //   req.flash('success','Successfully bought product');
-    //   req.session.cart = null;
-    //   res.redirect('/');
-    // });
 
 module.exports = router;
 
