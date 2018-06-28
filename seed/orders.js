@@ -2,7 +2,7 @@ var Order = require('../models/order.js');
 
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb: //localhost:27017/shopping');
+mongoose.connect('mongodb://localhost:27017/shopping');
 
 var orders = [
     new Order({

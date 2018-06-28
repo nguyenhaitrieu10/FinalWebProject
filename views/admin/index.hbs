@@ -55,28 +55,31 @@
 		<header class="agileits-box-header clearfix">
 		<h3>Thống kê</h3>
 			<div class="toolbar">
-				<div class="pull-left">
-					<div class="btn-group">
-						<a href="#" class="btn btn-default btn-xs active">Hàng tháng</a>
-					</div>
+				<input type="date" name="from">
+				Đến
+				<input type="date" name="to">
+				<div class="btn-group">
+					<a href="#" id="tee" class="btn btn-default btn-xs active ht-type">Áo cổ tròn</a>
+					<a href="#" id="polo" class="btn btn-default btn-xs ht-type">Áo cổ trụ</a>
 				</div>
-			</div>
+			</div>	
 		</header>
-		<div class="col-md-12 chart-laýer-left"> 
+		<div class="col-md-12 chart-layer-left"> 
 			<div class="glocy-chart">
 				<div class="span-2c">  
                     <h3 class="tlt"></h3>
                     <canvas id="bar" height="300" width="440" style="width: 440px; height: 300px;"></canvas>
+                    {{#if hasPolo}}
                     <script>
                         var barChartData = {
-                        labels : ["Tháng 1","Tháng 2","Tháng 3","Tháng 4","Tháng 5","Tháng 6","Tháng 7","Tháng 8","Tháng 9","Tháng 10","Tháng 11","Tháng 12"],
+                        labels : ["1","2","3","4","5","6","7","8","9","10","11","12"],
                         datasets : [
                             // {
                             //     fillColor : "#FC8213",
                             //     data : [65,59,90,81,56,55,40,65,59,90,81,56]
                             // },
                             {
-                                fillColor : "#337AB7",
+                                fillColor : "#337AB7",	
                                 //data : [28,48,40,19,96,27,100,77,59,96,27,100]
                                 data: [{{statistic}}]
                             }
@@ -85,12 +88,32 @@
                     };
                         new Chart(document.getElementById("bar").getContext("2d")).Bar(barChartData);
                     </script>
+                    {{else}}
+                    <script>
+                        var barChartData = {
+                        labels : ["1","2","3","4","5","6","7","8","9","10","11","12"],
+                        datasets : [
+                            
+                            {
+                                fillColor : "#FC8213",	
+                                //data : [28,48,40,19,96,27,100,77,59,96,27,100]
+                                data: [{{statistic}}]
+                            }
+                        ]
+
+                    };
+                        new Chart(document.getElementById("bar").getContext("2d")).Bar(barChartData);
+                    </script>             
+                    {{/if}}
                 </div> 			  		   			
 			</div>
-			<!-- <div style="width: 20px; height: 20px; background-color: #FC8213; display: inline-block; margin-left: 10px;"></div>
-			<span>Số lượng áo bán</span> -->
+			{{#if hasPolo}}
 			<div style="width: 20px; height: 20px; background-color: #337AB7; display: inline-block; margin-left: 10px;"></div>
-			<span>Thu nhập</span>
+			<span>Áo cổ trụ</span>
+			{{else}}
+			<div style="width: 20px; height: 20px; background-color: #FC8213; display: inline-block; margin-left: 10px;"></div>
+			<span>Áo cổ tròn</span>
+			{{/if}}
 		</div>
 	</div>
 </div>
@@ -123,3 +146,82 @@
 	</div>
 	<!-- //tables -->
 </div>
+
+<script type="text/javascript">
+	var url = location.href;
+	if (url.indexOf('type=') != -1){
+		let type = url.split('type=')[1].split('&')[0];
+		$('.active').removeClass('active');
+		$('#' + type).addClass('active');
+	}
+
+	if (url.indexOf('from=') != -1){
+		let from = url.split('from=')[1].split('&')[0];
+		$('input[name=from]').val(from);
+	}
+
+	if (url.indexOf('to=') != -1){
+		let to = url.split('to=')[1].split('&')[0];
+		$('input[name=to]').val(to);
+	}
+
+	$('input[name=from]').change(function(){
+		let self = $(this);
+		let cur = location.href;
+		if (cur.indexOf('?') == -1){
+			cur += '?';
+		} else if (cur[cur.length-1] != '&'){
+			cur += '&';
+		}
+
+		let query = cur.split('?')[1];
+		if (query.indexOf('from=') == -1){
+			cur += ('from=' + self.val());
+		}
+		else {
+			cur = cur.replace(/(from=).*?(&)/,'$1' + self.val() + '$2');
+		}
+		location.href = cur;
+	});
+
+	$('input[name=to]').change(function(){
+		let self = $(this);
+		let cur = location.href;
+		if (cur.indexOf('?') == -1){
+			cur += '?';
+		} else if (cur[cur.length-1] != '&'){
+			cur += '&';
+		}
+
+		let query = cur.split('?')[1];
+		if (query.indexOf('to=') == -1){
+			cur += ('to=' + self.val());
+		}
+		else {
+			cur = cur.replace(/(to=).*?(&)/,'$1' + self.val() + '$2');
+		}
+		location.href = cur;
+	});
+
+	$('.ht-type').click(function(){
+		$('.ht-type.active').removeClass('active');
+		$(this).addClass('active');
+		let self = $(this);
+		let cur = location.href;
+		if (cur.indexOf('?') == -1){
+			cur += '?';
+		} else if (cur[cur.length-1] != '&'){
+			cur += '&';
+		}
+
+		let query = cur.split('?')[1];
+		if (query.indexOf('type=') == -1){
+			cur += ('type=' + self.attr('id'));
+		}
+		else {
+			cur = cur.replace(/(type=).*?(&)/,'$1' + self.attr('id') + '$2');
+		}
+		location.href = cur;
+	});
+
+</script>

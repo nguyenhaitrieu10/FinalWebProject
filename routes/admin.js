@@ -23,23 +23,44 @@ router.get('/logout', isAdminLoggedIn, function(req, res, next){
 });
 
 router.get('/index', isAdminLoggedIn, function(req, res, next){
+	let polo = [];
+	let tee = [];
+	let from = new Date('2018-01-01');
+	let to = new Date();
+	let query = {};
+	let hasPolo = true;
+	if (req.query.type !== undefined){
+    	hasPolo = (req.query.type == 'polo')?true:false;
+	}
+
+	if (req.query.from !== undefined){
+    	from = new Date(req.query.from);
+	}
+	if (req.query.to !== undefined){
+    	to = new Date(req.query.to);
+	}
+
   	var messages = req.flash('error');
-  	User.count({},function(err, cUser){
+  	let range = (((to - from) / 3600000 / 24)<<0);
+  	if (range < 0)
+  		return req.redirect('admin/index');
+
+  	let bin = (range / 11)<<0;
+
+	User.count({},function(err, cUser){
   		if (err)
   			return res.write(error);
   		Product.count({},function(err, cProduct){
 	  		if (err)
 	  			return res.write(error);
-	  		Order.find({},"update cart",null,function(err, orders){
+	  		Order.find(query,"update cart",null,function(err, orders){
 		  		if (err)
 		  			return res.write(error);
 		  		var cOrder = orders.length;
 		  		var month = [0,0,0,0,0,0,0,0,0,0,0,0];
-		  		let curYear = (new Date()).getYear();
 		  		for (let i in orders){
-		  			if (orders[i].update.getYear() == curYear){
-		  				month[orders[i].update.getMonth()]+=(orders[i].cart.totalPrice);
-		  			}
+		  			if (orders[i].update >= from && orders[i].update <= to)
+		  				month[(((((orders[i].update - from) / 3600000 / 24)<<0)/bin)<<0)] +=(orders[i].cart.totalPrice);
 		  		}
 		  		// month = [65,59,90,81,56,55,40,65,59,90,81,56];
 		  		Order.find({},null, {limit: 4, sort: {update: -1}},function(err, lastesOrder){
@@ -55,10 +76,11 @@ router.get('/index', isAdminLoggedIn, function(req, res, next){
 						numOrder: cOrder,
 						numProduct: cProduct,
 						orders: lastesOrder,
-						statistic: month
+						statistic: month,
+						hasPolo: hasPolo,
 					});
 		  		});
-	  		});
+		  	});
   		});
   	});
 });
