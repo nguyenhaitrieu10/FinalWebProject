@@ -8,52 +8,31 @@
 		<div class="w3l-table-info">
 		  <div class="row">
 		  <h2 class="col-sm-8">Quản lý tài khoản</h2>
-		  <div class="col-sm-1"> <button class="btn btn-primary" style="margin-right: 30px;"><i class="fa fa-undo"></i></button></div>
-		  <div style="color: #ff4a43;font-size: 30px;" class="sm-col-3">4 User</div>
+		  <!-- <div class="col-sm-1"> <button class="btn btn-primary" style="margin-right: 30px;"><i class="fa fa-undo"></i></button></div> -->
+		  <div style="color: #ff4a43;font-size: 30px;" class="sm-col-3">{{numUsers}} người dùng</div>
 		  </div>
 		    <table id="table">
 			<thead>
 			  <tr>
 				<th>Họ tên</th>
 				<th>Email</th>
-				<th>Tuổi</th>
-				<th>Giới tính</th>
+				<th>SĐT</th>
 				<th>Trạng thái</th>
 			  </tr>
 			</thead>
 			<tbody>
+			{{#each users}}
 			  <tr>
-				<td>Thiên Bảo</td>
-				<td>baobeo123@gmail.com</td>
-				<td>30</td>
-				<td>Nam</td>
-				<td><a href="#" class="badge badge-secondary">Offline</a></td>
-				
+				<td>{{name}}</td>
+				<td>{{email}}</td>
+				<td>{{phone}}</td>
+				{{#if status}}
+				<td><a href="#" class="badge badge-success">Active</a></td>
+				{{else}}
+				<td><a href="#" class="badge badge-secondary">Inactive</a></td>
+				{{/if}}
 			  </tr>
-			  <tr>
-				<td>Huỳnh Anh</td>
-				<td>huynhanh@gmail.com</td>
-				<td>22</td>
-				<td>Nữ</td>
-				<td><a href="#" class="badge badge-success">Online</a></td>
-				
-			  </tr>
-			  <tr>
-				<td>Naruto</td>
-				<td>sasuke@gmail.com</td>
-				<td>27</td>
-				<td>Nam</td>
-				<td><a href="#" class="badge badge-success">Online</a></td>
-				
-			  </tr>
-			  <tr>
-				<td>Hamlet Truong</td>
-				<td>wtf@gmail.com</td>
-				<td>17</td>
-				<td>Nam</td>
-				<td><a href="#" class="badge badge-secondary">Offline</a></td>
-				
-			  </tr>
+			 {{/each}}
 			</tbody>
 		  </table>
 		</div>

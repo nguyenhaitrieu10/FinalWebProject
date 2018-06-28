@@ -73,8 +73,8 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.write('error');
-  // res.render('other/error',{layout: null});
+  // res.write('error');
+  res.render('other/error',{layout: null});
 });
 
 

@@ -71,9 +71,11 @@ $(document).ready(function(){
 
 		let query = cur.split('?')[1];
 		if (query.indexOf('sort=') == -1){
+			cur = cur.replace(/(page=).*?(&)/,'$1' + 1 + '$2');
 			cur += ('sort=' + self.attr('value'));
 		}
 		else {
+			cur = cur.replace(/(page=).*?(&)/,'$1' + 1 + '$2');
 			cur = cur.replace(/(sort=).*?(&)/,'$1' + self.attr('value') + '$2');
 		}
 		location.href = cur;
@@ -94,9 +96,11 @@ $(document).ready(function(){
 
 		let query = cur.split('?')[1];
 		if (query.indexOf('search=') == -1){
+			cur = cur.replace(/(page=).*?(&)/,'$1' + 1 + '$2');
 			cur += ('search=' + $('#ht-search').val());
 		}
 		else {
+			cur = cur.replace(/(page=).*?(&)/,'$1' + 1 + '$2');
 			cur = cur.replace(/(search=).*?(&)/,'$1' + $('#ht-search').val() + '$2');
 		}
 		location.href = cur;

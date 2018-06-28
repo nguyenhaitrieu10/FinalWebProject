@@ -69,6 +69,78 @@ router.get('/orders', isAdminLoggedIn, function(req, res, next){
 	});
 });
 
+router.get('/users', isAdminLoggedIn, function(req, res, next){
+	User.find({role: null},function(err, users){
+		if (err)
+			return res.write('error');
+		
+		res.render('admin/users',{
+			layout: 'admin-layout',
+			users: users,
+			numUsers: users.length
+		});	
+	});
+	
+});
+
+router.get('/products', isAdminLoggedIn, function(req, res, next){
+  let query = {};
+  let sort = {update: -1};
+  let page = 1;
+  let keywords = "";
+
+  if (req.query.type != undefined)
+    query.type = req.query.type;
+  if (req.query.color != undefined)
+    query.color = req.query.color;
+  if (req.query.page != undefined)
+    page = req.query.page;
+  if (req.query.search != undefined)
+    keywords = req.query.search;
+  if (req.query.sort != undefined){ 
+    if (req.query.sort == 'lowest')
+      sort = {price: 1};
+    else if (req.query.sort == 'highest')
+      sort = {price: -1};
+    else if (req.query.sort == 'newst')
+      sort = {update: -1};
+  }
+
+
+  let limit = 12;
+  let skip = (page-1)*limit;
+  if (keywords)
+    query.$text = { $search : keywords };
+
+  Product.find(query,"_id",null,function(err,result){
+    if (err){
+      return res.write('Error');
+    }
+    let number = result?(((result.length/limit)<<0) + (result.length%limit==0?0:1)):0;
+
+    console.log(number);
+    Product.find(query, null, {limit: limit, sort: sort, skip: skip}, function(err, tshirts){
+      let pages = [];
+      for (let i = 0; i < number; ++i){
+        pages.push({number: i+1});
+      }
+      if (pages[page-1])
+        pages[page-1].active = true;
+
+      console.log(pages);
+      res.render('admin/products', {
+		layout: 'admin-layout',
+        title: 'warehouse',
+        lists: tshirts, 
+        count: result.length,
+        pages: pages,
+        isShopping: true,
+        needPage: number
+      });
+    });
+  });
+});
+
 router.use('/',notLoggedIn, function(req, res, next){
 	next();
 });

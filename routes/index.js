@@ -50,7 +50,7 @@ router.get('/shopping', function(req, res, next) {
     if (err){
       return res.write('Error');
     }
-    let number = result?((result.length/limit)<<0 + (result.length%limit==0?0:1)):0;
+    let number = result?(((result.length/limit)<<0) + (result.length%limit==0?0:1)):0;
 
     Product.find(query, null, {limit: limit, sort: sort, skip: skip}, function(err, tshirts){
       let pages = [];
