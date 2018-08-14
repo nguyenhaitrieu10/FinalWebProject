@@ -1,0 +1,275 @@
+Huong dan lam viec voi Nodejs Postgres Sequelize
+
+Buoc 1: Xay dung website tinh
+
+*******************
+Buoc 2: Thiet ke va tao CSDL
+1. Tao thu muc web
+$ mkdir MSSV
+$ cd MSSV
+
+2. Khoi tao package.json
+$ npm init
+
+3. Cai dat cac package can su dung (express, express-handlebars, ...)
+$ npm install --save express body-parser express-handlebars express-handlebars-paginate pg pg-hstore sequelize
+
+4. Tao cac thu muc cho csdl
+$ sequelize init
+- MSSV/
+    - config/config.json
+        - migrations/
+            - models/
+                - seeders/
+
+                5. Tao database va cau hinh ket noi trong config.json
+
+                6. Tao models
+                $ sequelize model:generate --name Article --attributes title:string
+                $ sequelize model:generate --name Comment --attributes comment:string
+
+                - MSSV/
+                    - models/
+                            - article.js
+                                    - comment.js
+                                            - index.js
+
+                                            7. Dinh nghia lai model, bo sung thuoc tinh va associations
+                                            - models/article.js
+                                            'use strict';
+                                            module.exports = (sequelize, DataTypes) => {
+                                                  var Article = sequelize.define('Article', {
+                                                          title: DataTypes.STRING,
+                                                              imagepath: DataTypes.STRING,
+                                                                  summary: DataTypes.TEXT,
+                                                                      description: DataTypes.TEXT
+                                                                        }, {});
+                                                    Article.associate = function(models) {
+                                                            Article.hasMany(models.Comment);
+                                                              };
+                                                                return Article;
+                                            };
+
+                                            - models/comment.js
+                                            'use strict';
+                                            module.exports = (sequelize, DataTypes) => {
+                                                  var Comment = sequelize.define('Comment', {
+                                                          comment: DataTypes.TEXT
+                                                            }, {});
+                                                    Comment.associate = function(models) {
+                                                            Comment.belongsTo(models.Article);
+                                                              };
+                                                                return Comment;
+                                            };
+
+                                            Tham khao:
+                                            http://docs.sequelizejs.com/variable/index.html#static-variable-DataTypes
+                                            http://docs.sequelizejs.com/class/lib/model.js~Model.html
+
+                                            8. Tao file app.js va dinh nghia express server don gian
+                                            - MSSV/
+                                                - app.js
+
+                                                var express = require('express');
+                                                var app = express();
+
+                                                // Setting for app here
+
+                                                // Define your routes here
+
+                                                // Set Server Port & Start Server
+                                                app.set('port', (process.env.PORT || 5000));
+
+                                                app.listen(app.get('port'), function(){
+                                                        console.log('Server is listening at port ' + app.get('port'));
+                                                });
+
+                                                9. Dinh nghia route '/sync' de sync CSDL
+                                                // Create database
+                                                var models = require('./models');
+                                                app.get('/sync', function(req, res){
+                                                        models.sequelize.sync().then(function(){
+                                                                    res.send('database sync completed!');
+                                                                        });
+                                                });
+
+                                                10. Start server va chay /sync de tao database
+                                                $ nodemon app
+
+                                                - Chay sync tren browser: localhost:5000/sync
+
+                                                - Kiem tra database tao co du Tables, Attributes & associations
+
+                                                11. Tao du lieu mau cho database
+                                                - Tao file seeds
+                                                $ sequelize seed:generate --name demo-article
+
+                                                - Dinh nghia du lieu mau trong file seeds/xxx-demo-article.js
+                                                'use strict';
+
+                                                module.exports = {
+                                                      up: (queryInterface, Sequelize) => {
+                                                              var articles = [
+                                                                    {
+                                                                                title: "Design Research",
+                                                                                        imagepath: "/images/design.jpg",
+                                                                                                summary: "We help you better understand the needs and goals of your customers, uncovering key insights that drive innovative design ideas.",
+                                                                                                        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+                                                                                                        non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                                                                                                                createdAt: Sequelize.literal('NOW()'),
+                                                                                                                        updatedAt: Sequelize.literal('NOW()')
+                                                                                                                              }
+                                                                                                                                  ];
+                                                                                                                                      return queryInterface.bulkInsert('Articles', articles, {});
+                                                                                                                                        },
+
+                                                                                                                                          down: (queryInterface, Sequelize) => {
+                                                                                                                                                    return queryInterface.bulkDelete('Articles', null, {});
+                                                                                                                                                      }
+                                                };
+
+                                                - Chay lenh tao du lieu
+                                                $ sequelize db:seed:all
+
+                                                - Kiem tra da co du lieu mau
+
+                                                *******************
+                                                Buoc 3: Xay dung Web dong Express server
+
+                                                12. Tao cac thu muc & file cho express server
+                                                - MSSV/
+                                                    - public/
+                                                        - views/
+                                                                - layouts/
+                                                                            - layout.hbs
+                                                                                    - partials/
+                                                                                                - header.hbs
+                                                                                                        - index.hbs
+                                                                                                                - details.hbs
+                                                                                                                    - routes/
+                                                                                                                            - articles.js
+                                                                                                                                    - comments.js
+                                                                                                                                        - controllers/
+                                                                                                                                                - articlesController.js
+                                                                                                                                                        - commentsController.js
+
+                                                                                                                                                            13. Thiet lap public folder
+                                                                                                                                                            // Set Public Folder
+                                                                                                                                                            app.use(express.static(__dirname + '/public'));
+
+                                                                                                                                                            14. Chep cac thu muc images, css, js cua web tinh vao thu muc public
+
+                                                                                                                                                            15. Thiet lap view engine handlebars
+                                                                                                                                                            // Use View Engine
+                                                                                                                                                            var expressHbs = require('express-handlebars');
+                                                                                                                                                            var paginateHelper = require('express-handlebars-paginate');
+                                                                                                                                                            var hbs = expressHbs.create({
+                                                                                                                                                                    extname: 'hbs',
+                                                                                                                                                                        defaultLayout: 'layout              ',
+                                                                                                                                                                            layoutsDir: __dirname + '/views/layouts/',
+                                                                                                                                                                                partialsDir: __dir              name + '/views/partials/',
+                                                                                                                                                                                    helpers: {
+                                                                                                                                                                                                paginate: paginateHelper.cr         eatePagination
+                                                                                                                                                                                                    }
+                                                                                                                                                            });
+                                                                                                                                                            app.engine('hbs', hbs.engine);
+                                                                                                                                                            app.set('view engine', 'hbs');
+
+                                                                                                                                                            16. Xay dung views su dung index.html & details.html:
+                                                                                                                                                            - Cau truc chung lam layout.hbs
+                                                                                                                                                            - Noi dung header cho header.hbs
+                                                                                                                                                            - Noi dung chinh cua index.html cho index.hbs
+                                                                                                                                                            - Noi dung chinh cua details.html cho details.hbs
+
+                                                                                                                                                            17. Dinh nghia routes trong app.js de test view render
+                                                                                                                                                            // Test view render
+                                                                                                                                                            app.get('/', function(req, res){
+                                                                                                                                                                    res.render('index');
+                                                                                                                                                            });
+
+                                                                                                                                                            app.get('/articles/:id', function(req, res){
+                                                                                                                                                                    res.render('details');
+                                                                                                                                                            });
+
+                                                                                                                                                            - Chay Browser:
+                                                                                                                                                            localhost:5000/
+                                                                                                                                                            loalhost:5000/articles/1
+
+                                                                                                                                                            18. Xay dung controllers xu ly cac thao tac CRUD cho article va comment
+                                                                                                                                                            - controllers/articlesController.js
+                                                                                                                                                            var controller = {};
+
+                                                                                                                                                            var models = require('../models');
+
+                                                                                                                                                            controller.getAll = function(callback){
+                                                                                                                                                                    models.Article
+                                                                                                                                                                        .findAll()
+                                                                                                                                                                            .then(function(articles){
+                                                                                                                                                                                        callback(articles);
+                                                                                                                                                                                            })
+                                                                                                                                                            };
+
+                                                                                                                                                            controller.getById = function(id, callback){
+                                                                                                                                                                    models.Article
+                                                                                                                                                                        .findOne({
+                                                                                                                                                                                    where: {id: id},
+                                                                                                                                                                                            include: [models.Comment]
+                                                                                                                                                                                                })
+                                                                                                                                                                            .then(function(article){
+                                                                                                                                                                                        callback(article);
+                                                                                                                                                                                            });
+                                                                                                                                                            };
+                                                                                                                                                            module.exports = controller;
+
+                                                                                                                                                            - controllers/commentsControllers.js
+                                                                                                                                                            Tuong tu dinh nghia cac phuong thuc
+                                                                                                                                                            controller.add => models.Comment.create
+                                                                                                                                                            controller.delete => models.Comment.destroy
+                                                                                                                                                            controller.update => models.Comment.update
+
+                                                                                                                                                            19. Thiet lap su dung body-parser
+                                                                                                                                                            // Body Parser Middleware
+                                                                                                                                                            var bodyParser = require('body-parser');
+                                                                                                                                                            app.use(bodyParser.json());
+                                                                                                                                                            app.use(bodyParser.urlencoded({ extended: false }));
+
+                                                                                                                                                            20. Thiet ke va dinh nghia cac routes
+                                                                                                                                                            - app.js
+                                                                                                                                                            app.get('/', function(req, res){
+                                                                                                                                                                    res.redirect('/articles');
+                                                                                                                                                            })
+
+                                                                                                                                                            var articles = require('./routes/articles');
+                                                                                                                                                            app.use('/articles', articles);
+
+                                                                                                                                                            var index = require('./routes/comments');
+                                                                                                                                                            app.use('/comments', comments);
+
+                                                                                                                                                            - routes/articles.js
+                                                                                                                                                            var express = require('express');
+                                                                                                                                                            var router = express.Router();
+
+                                                                                                                                                            var articlesController = require('../controllers/articlesController');
+                                                                                                                                                            router.get('/', function(req, res){
+                                                                                                                                                                    articlesController.getAll(function(articles){
+                                                                                                                                                                                res.render('index', {articles: articles});
+                                                                                                                                                                                    });
+                                                                                                                                                            });
+
+                                                                                                                                                            router.get('/:id', function(req, res){
+                                                                                                                                                                    // res.render('details', ...)
+                                                                                                                                                            })
+                                                                                                                                                            module.exports = router;
+
+                                                                                                                                                            - routes/comments.js
+                                                                                                                                                            Tuong tu router articles, dinh nghia cac router cho comments
+                                                                                                                                                            + router.post('/'...) => create comment
+                                                                                                                                                            + router.put('/:id'...) => update comment
+                                                                                                                                                            + router.delete('/:id'...) => delete comment
+
+                                                                                                                                                            21. Chinh sua views va cac lenh ajax phia client (neu can)
+                                                                                                                                                            - Tu router truyen du lieu cho view
+                                                                                                                                                            - Dinh nghia bind du lieu tren view hbs
+                                                                                                                                                            - Su dung express-handlebars-paginate xay dung chuc nang phan trang
+                                                                                                                                                            Tham khao:
+                                                                                                                                                            https://www.npmjs.com/package/express-handlebars-paginate
