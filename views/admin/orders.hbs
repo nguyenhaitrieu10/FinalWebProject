@@ -2,125 +2,93 @@
     <li class="breadcrumb-item"><a href="">Home</a><i class="fa fa-angle-right"></i>Tabels</li>
 </ol> -->
 
-<div class="agile-grids">	
+<div class="agile-grids">
+<form id="ht-type-order" style="padding-top: 30px; color: #ff4a43">
+	<div class="checkbox">
+	  <label class="ht-type ht-checkbox"><input name="type-order" type="radio" id="shipping" value="wait" checked>Đơn hàng chờ xử lý</label>
+	</div>
+	<div class="checkbox">
+	  <label class="ht-type ht-checkbox"><input name="type-order" type="radio" id="wait" value="shipping">Đơn hàng đã xử lý</label>
+	</div>
+	<div class="col-sm-3" style="padding: 0;">
+		<div class="dropdown show" style="width: 100%; ">
+		  <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 100%; padding: 0; border: solid 1px #ff6600;"> Sắp xếp theo </a>
+		  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="width: 100%; text-align: center;">
+		    <a class="dropdown-item ht-sort active" href="#" value="newest">Mới nhất</a>
+		    <a class="dropdown-item ht-sort" href="#" value="lowest">Giá từ thấp đến cao</a>
+		    <a class="dropdown-item ht-sort" href="#" value="highest">Giá từ cao đến thấp</a>
+		  </div>
+		</div>
+	</div>
+</form>	
 	<!-- tables -->				
 	<div class="agile-tables">
-		<div class="w3l-table-info">
+		<div class="w3l-table-info wait-table">
 		  <div class="row">
+		   {{#if isWait}}
 		  <h2 class="col-sm-8">Đơn hàng chờ xử lý</h2>
-		  <div class="col-sm-1"> <button class="btn btn-primary" style="margin-right: 30px;"><i class="fa fa-undo"></i></button></div>
+		   {{else}}
+		  <h2 class="col-sm-8">Đơn hàng đã xử lý</h2>
+		   {{/if}}
+<!-- 		  <div class="col-sm-1"> <button class="btn btn-primary" style="margin-right: 30px;"><i class="fa fa-undo"></i></button></div> -->
 
-		  <div style="color: #ff4a43;font-size: 30px;" class="sm-col-3">5 đơn hàng</div>
+		  <div style="color: #ff4a43;font-size: 30px;" class="sm-col-3">{{numOrder}} đơn hàng</div>
 		  </div>
 		    <table id="table">
 			<thead>
 			  <tr>
 				<th>Khách hàng</th>
-				<th>Giới tính</th>
-				<th>Mã đơn hàng</th>
 				<th>Thời gian</th>
-				<th>Tổng tiền (VND)</th>
+				<th>Tổng tiền (usd)</th>
 				<th>Xử lý</th>
 			  </tr>
 			</thead>
 			<tbody>
+			{{#each orders}}
 			  <tr>
-				<td>Huỳnh Anh</td>
-				<td>Nữ</td>
-				<td>F03445</td>
-				<td>14:00 22/05/2018</td>
-				<td>350.000</td>
-				<td><button class="btn btn-primary admin-detail-order">Chi tiết</button></td>
+				<td>{{user}}</td>
+				<td>{{update}}</td>
+				<td>{{cart.totalPrice}}</td>
+				<td>
+					<a href="/admin/order-detail/{{_id}}" class="btn btn-primary admin-detail-order" style="color: #fff">
+					Chi tiết
+					</a>
+				</td>
 			  </tr>
-			  <tr>
-				<td>Huỳnh Anh</td>
-				<td>Nữ</td>
-				<td>B23411</td>
-				<td>8:30 18/05/2018	</td>
-				<td>99.000</td>
-				<td><button class="btn btn-primary admin-detail-order">Chi tiết</button></td>
-			  </tr>
-			  <tr>
-				<td>Thiên Bảo</td>
-				<td>Nam</td>
-				<td>C001F8</td>
-				<td>20:55 22/05/2018</td>
-				<td>150.000</td>
-				<td><button class="btn btn-primary admin-detail-order">Chi tiết</button></td>
-			  </tr>
-			  <tr>
-				<td>Thiên Bảo</td>
-				<td>Nam</td>
-				<td>C001F8</td>
-				<td>20:55 22/05/2018</td>
-				<td>150.000</td>
-				<td><button class="btn btn-primary admin-detail-order">Chi tiết</button></td>
-			  </tr>
-			  <tr>
-				<td>Thiên Bảo</td>
-				<td>Nam</td>
-				<td>C001F8</td>
-				<td>20:55 22/05/2018</td>
-				<td>150.000</td>
-				<td><button class="btn btn-primary admin-detail-order">Chi tiết</button></td>
-			  </tr>
+			{{/each}}
 			</tbody>
 		  </table>
-		</div>
-	</div>
-	<!-- //tables -->
-
-</div>
-
-	<div class="agile-grids">	
-	<!-- tables -->				
-	<div class="agile-tables">
-		<div class="w3l-table-info">
-		  <div class="row">
-		  <h2 class="col-sm-8">Đơn hàng đang giao</h2>
-		  <div class="col-sm-1"> <button class="btn btn-primary" style="margin-right: 30px;"><i class="fa fa-undo"></i></button></div>
-
-		  <div style="color: #ff4a43;font-size: 30px;" class="sm-col-3">3 đơn hàng</div>
-		  </div>
-		    <table id="table2">
-			<thead>
-			  <tr>
-				<th >Khách hàng</th>
-				<th>Giới tính</th>
-				<th>Mã đơn hàng</th>
-				<th>Thời gian</th>
-				<th>Tổng tiền (VND)</th>
-				<th>Xác nhận hoàn tất</th>
-			  </tr>
-			</thead>
-			<tbody>
-			  <tr>
-				<td>Huỳnh Anh</td>
-				<td>Nữ</td>
-				<td>F03445</td>
-				<td>14:00 22/05/2018</td>
-				<td>350.000</td>
-				<td><!-- <button class="btn btn-primary admin-detail-order" style="margin-right: 5px;">Chi tiết</button> --><button class="btn btn-success admin-delivered">Hoàn tất</button></td>
-			  </tr>
-			  <tr>
-				<td>Huỳnh Anh</td>
-				<td>Nữ</td>
-				<td>B23411</td>
-				<td>8:30 18/05/2018	</td>
-				<td>99.000</td>
-				<td><!-- <button class="btn btn-primary admin-detail-order" style="margin-right: 5px;">Chi tiết</button> --><button class="btn btn-success admin-delivered">Hoàn tất</button></td>
-			  </tr>
-			  <tr>
-				<td>Thiên Bảo</td>
-				<td>Nam</td>
-				<td>C001F8</td>
-				<td>20:55 22/05/2018</td>
-				<td>150.000</td>
-				<td><!-- <button class="btn btn-primary admin-detail-order" style="margin-right: 5px;">Chi tiết</button> --><button class="btn btn-success admin-delivered">Hoàn tất</button></td>
-			  </tr>
-			</tbody>
-		  </table>
+		  {{#if needPage}}
+		  	<nav aria-label="Page navigation example">
+			  <ul class="pagination justify-content-center">
+			    <li class="page-item disabled">
+			      <a class="page-link" href="#" tabindex="-1">Previous</a>
+			    </li>
+			    {{#each pages}}
+			    <li class="page-item {{#if active}}active{{/if}}">
+			    	<a class="page-link" href="?page={{number}}">{{number}}</a>
+			    </li>
+			    {{/each}}
+			    <li class="page-item">
+			      <a class="page-link" href="#">Next</a>
+			    </li>
+			  </ul>
+			</nav>
+			{{/if}}
 		</div>
 	</div>
 	<!-- //tables -->
 </div>
+<script type="text/javascript" src="/js/orders.js"></script>
+
+<!-- <style type="text/css">
+	.hidden{
+		display: none;
+	}
+</style>
+<script type="text/javascript">
+	$('input[name="type-order"]').click(function(){
+		$('.hidden').removeClass('hidden');
+		$('.' + $(this).attr('id') + '-table').addClass('hidden');
+	});
+</script> -->

@@ -60,7 +60,7 @@ router.get('/index', isAdminLoggedIn, function(req, res, next){
 		  		var month = [0,0,0,0,0,0,0,0,0,0,0,0];
 		  		for (let i in orders){
 		  			if (orders[i].update >= from && orders[i].update <= to)
-		  				month[(((((orders[i].update - from) / 3600000 / 24)<<0)/bin)<<0)] +=(orders[i].cart.totalPrice);
+		  				month[(((((orders[i].update - from) / 3600000 / 24)<<0)/bin)<<0)] +=(orders[i].cart?orders[i].cart.totalPrice:0);
 		  		}
 		  		// month = [65,59,90,81,56,55,40,65,59,90,81,56];
 		  		Order.find({},null, {limit: 4, sort: {update: -1}},function(err, lastesOrder){
@@ -118,22 +118,48 @@ router.post('/deban/:id', isAdminLoggedIn, function(req, res, next){
 
 
 router.get('/orders', isAdminLoggedIn, function(req, res, next){
-	res.render('admin/orders',{
-		layout: 'admin-layout'
-	});
-});
+  	let query = {status: 'wait'};
+	let sort = {update: -1};
+	let page = 1;
 
-router.get('/users', isAdminLoggedIn, function(req, res, next){
-	User.find({role: null},function(err, users){
+	if (req.query.status != undefined)
+	   query.status = req.query.status;
+	if (req.query.page != undefined)
+    	page = req.query.page;
+	if (req.query.sort != undefined){ 
+	    if (req.query.sort == 'lowest')
+	      sort = {price: 1};
+	    else if (req.query.sort == 'highest')
+	      sort = {price: -1};
+	    else if (req.query.sort == 'newst')
+	      sort = {update: -1};
+	}
+
+	let limit = 6;
+	let skip = (page-1)*limit;
+
+	Order.find(query,"_id",null,function(err,result){
 		if (err)
 			return res.write('error');
-		
-		res.render('admin/users',{
+    	let number = result?(((result.length/limit)<<0) + (result.length%limit==0?0:1)):0;
+		Order.find(query, null, {limit: limit, sort: sort, skip: skip}, function(err, orders){
+	      let pages = [];
+	      for (let i = 0; i < number; ++i){
+	        pages.push({number: i+1});
+	      }
+	      if (pages[page-1])
+	        pages[page-1].active = true;
+
+	      res.render('admin/orders', {
 			layout: 'admin-layout',
-			users: users,
-			numUsers: users.length,
-			csrfToken: req.csrfToken()
-		});	
+	        title: 'orders',
+	        orders: orders, 
+	        numOrder: result.length,
+	        pages: pages,
+	        isWait: (query.status == 'wait'),
+	        needPage: number
+	      });
+	    });
 	});
 });
 
@@ -172,7 +198,6 @@ router.get('/products', isAdminLoggedIn, function(req, res, next){
     }
     let number = result?(((result.length/limit)<<0) + (result.length%limit==0?0:1)):0;
 
-    console.log(number);
     Product.find(query, null, {limit: limit, sort: sort, skip: skip}, function(err, tshirts){
       let pages = [];
       for (let i = 0; i < number; ++i){
@@ -181,7 +206,6 @@ router.get('/products', isAdminLoggedIn, function(req, res, next){
       if (pages[page-1])
         pages[page-1].active = true;
 
-      console.log(pages);
       res.render('admin/products', {
 		layout: 'admin-layout',
         title: 'warehouse',
@@ -194,6 +218,49 @@ router.get('/products', isAdminLoggedIn, function(req, res, next){
     });
   });
 });
+
+router.get('/order-detail/:id', isAdminLoggedIn, function(req, res, next){
+	let id = req.params.id;
+	console.log(id);
+	Order.findOne({_id: id},function(err, order){
+		if (err)
+			return res.write('error');
+		
+		res.render('admin/order-detail',{
+			layout: 'admin-layout',
+			cart: order.cart,
+			_id: order._id,
+			accepted: order.status !== 'shipping'
+		});	
+	});
+});
+
+router.get('/order-shipping/:id', isAdminLoggedIn, function(req, res, next){
+	let id = req.params.id;
+	console.log(id);
+	Order.update({_id: id},{status: 'shipping'},function(err, order){
+		if (err)
+			return res.write('error');
+		
+		return res.redirect('/admin/orders');
+
+	});
+});
+
+router.get('/users', isAdminLoggedIn, function(req, res, next){
+	User.find({role: null},function(err, users){
+		if (err)
+			return res.write('error');
+		
+		res.render('admin/users',{
+			layout: 'admin-layout',
+			users: users,
+			numUsers: users.length,
+			csrfToken: req.csrfToken()
+		});	
+	});
+});
+
 
 router.use('/',notLoggedIn, function(req, res, next){
 	next();
